@@ -1,20 +1,18 @@
-import styled from 'styled-components/macro';
-import GlobalStyle from "./GlobalStyle";
-import './App.css';
+import styled from "styled-components/macro";
+import GlobalStyle from "./global-styles";
 
 const DummyText = styled.h1`
   display: flex;
   justify-content: center;
-  align-items: center;
-  font-size: 10rem;
-  text-transform: uppercase;
+  font-size: 5rem;
+  font-weight: 700;
 `;
 
 function App() {
   return (
     <>
       <GlobalStyle />
-      <DummyText>fastion forecast</DummyText>
+      <DummyText>Fashion Forcast</DummyText>
     </>
   );
 }
