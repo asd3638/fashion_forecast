@@ -1,18 +1,21 @@
 import styled from "styled-components/macro";
+import { BrowserRouter, Route } from "react-router-dom";
 import GlobalStyle from "./global-styles";
-
-const DummyText = styled.h1`
-  display: flex;
-  justify-content: center;
-  font-size: 5rem;
-  font-weight: 700;
-`;
+import Nav from "./components/Nav";
+import Home from "./routes/Home";
+import Today from "./routes/Today";
+import Shopping from "./routes/Shopping";
 
 function App() {
   return (
     <>
       <GlobalStyle />
-      <DummyText>Fashion Forcast</DummyText>
+      <Nav />
+      <BrowserRouter>
+        <Route exact path="/" component={Home} />
+        <Route path="/today" component={Today} />
+        <Route path="/shopping" component={Shopping} />
+      </BrowserRouter>
     </>
   );
 }
