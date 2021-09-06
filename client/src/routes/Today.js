@@ -1,7 +1,13 @@
+import WeatherSection from "../components/WeatherSection";
+import UploadSection from "../components/UploadSection";
+import ResultSection from "../components/ResultSection";
+
 function Today() {
   return (
     <>
-      <h1>Today</h1>
+      <WeatherSection />
+      <UploadSection />
+      <ResultSection />
     </>
   );
 }
