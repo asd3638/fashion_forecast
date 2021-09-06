@@ -1,4 +1,3 @@
-import styled from "styled-components/macro";
 import { BrowserRouter, Route } from "react-router-dom";
 import GlobalStyle from "./global-styles";
 import Nav from "./components/Nav";
@@ -10,8 +9,8 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <Nav />
       <BrowserRouter>
+        <Nav />
         <Route exact path="/" component={Home} />
         <Route path="/today" component={Today} />
         <Route path="/shopping" component={Shopping} />

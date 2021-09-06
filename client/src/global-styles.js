@@ -4,7 +4,10 @@ import reset from "styled-reset";
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@100;400;700&display=swap');
   ${reset}
-
+  
+  :root {
+    --horizontal-space: 5.5rem;
+  }
   html {
     font-size: 62.5%;
   }
@@ -15,6 +18,7 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 1.6rem;
+    padding: var(--horizontal-space);
   }
   a {
     color: inherit;
