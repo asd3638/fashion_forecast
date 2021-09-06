@@ -4,9 +4,12 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 1rem;
   & + & {
     margin-left: 1rem;
+  }
+  & .input-title {
+    font-size: 1.4rem;
+    letter-spacing: 0.2rem;
   }
 `;
 const ImageShow = styled.div`
@@ -38,7 +41,7 @@ function InputBox({ title }) {
             <i class="fas fa-plus"></i>
           </UploadBtn>
         </ImageShow>
-        <span>{title}</span>
+        <span class="input-title">{title}</span>
       </Wrapper>
     </>
   );
