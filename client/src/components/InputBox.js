@@ -1,4 +1,5 @@
 import styled from "styled-components/macro";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -37,9 +38,11 @@ function InputBox({ title }) {
     <>
       <Wrapper>
         <ImageShow>
-          <UploadBtn>
-            <i class="fas fa-plus"></i>
-          </UploadBtn>
+          <Link to="/capture">
+            <UploadBtn>
+              <i class="fas fa-plus"></i>
+            </UploadBtn>
+          </Link>
         </ImageShow>
         <span class="input-title">{title}</span>
       </Wrapper>
