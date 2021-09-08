@@ -7,6 +7,7 @@ const { Look, Temp } = require('../models');
 const router = express.Router();
 
 var storage = multer.diskStorage({
+  //uplaod하면 서버에 저장하고 db에는 파일명만 저장
   destination: path.join(__dirname, "../public/uploads"),
   filename: function (req, file, cb) {
     const ext = path.extname(file.originalname);
