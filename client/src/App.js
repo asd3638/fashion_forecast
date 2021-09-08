@@ -1,20 +1,22 @@
-import styled from 'styled-components/macro';
-import GlobalStyle from "./GlobalStyle";
-import './App.css';
-
-const DummyText = styled.h1`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 10rem;
-  text-transform: uppercase;
-`;
+import { BrowserRouter, Route } from "react-router-dom";
+import GlobalStyle from "./global-styles";
+import Nav from "./components/Nav";
+import Home from "./routes/Home";
+import Today from "./routes/Today";
+import Shopping from "./routes/Shopping";
+import Capture from "./routes/Capture";
 
 function App() {
   return (
     <>
       <GlobalStyle />
-      <DummyText>fastion forecast</DummyText>
+      <BrowserRouter>
+        <Nav />
+        <Route exact path="/" component={Home} />
+        <Route path="/today" component={Today} />
+        <Route path="/shopping" component={Shopping} />
+        <Route path="/capture" component={Capture} />
+      </BrowserRouter>
     </>
   );
 }
