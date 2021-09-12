@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import { Camera } from "../components/Camera";
 
 function Capture() {
-  const [isCameraOpen, setIsCameraOpen] = useState(false);
+  // const [isCameraOpen, setIsCameraOpen] = useState(false);
   const [cardImage, setCardImage] = useState();
 
   return (
     <>
-      {isCameraOpen && (
-        <Camera
-          onCapture={(blob) => setCardImage(blob)}
-          onClear={() => setCardImage(undefined)}
-        />
-      )}
+      <Camera
+        onCapture={(blob) => setCardImage(blob)}
+        onClear={() => setCardImage(undefined)}
+      ></Camera>
+      {/* TBD: cardImage 서버에 저장하는 작업 */}
       {cardImage && (
         <div>
           <h2>Preview</h2>
@@ -22,18 +21,6 @@ function Capture() {
           />
         </div>
       )}
-
-      <div>
-        <button onClick={() => setIsCameraOpen(true)}>Open Camera</button>
-        <button
-          onClick={() => {
-            setIsCameraOpen(false);
-            setCardImage(undefined);
-          }}
-        >
-          Close Camera
-        </button>
-      </div>
     </>
   );
 }
