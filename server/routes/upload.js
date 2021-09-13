@@ -1,6 +1,8 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
+const pythonShell = require('python-shell');
+const axios = require('axios');
 
 const { Look, Temp } = require('../models');
 
@@ -17,7 +19,7 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage });
 
-router.post("/upload", upload.single("image"), async (req, res, next) => {
+router.post("/get", upload.single("image"), async (req, res, next) => {
   const userId = req.body.userId;
   const kind = req.body.kind;
   const image = req.file.filename;
@@ -28,6 +30,8 @@ router.post("/upload", upload.single("image"), async (req, res, next) => {
   }
   try {
     await Temp.create(data);
+    const dl_response = await axios.get("http://localhost:5000/model?filename=" + image)
+    console.log(dl_response.data)
     return res.send("success");
   } catch (error) {
     console.error(error);
