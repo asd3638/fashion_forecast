@@ -30,9 +30,8 @@ router.post("/get", upload.single("image"), async (req, res, next) => {
   }
   try {
     await Temp.create(data);
-    const dl_response = await axios.get("http://localhost:5000/model?filename=" + image)
-    console.log(dl_response.data)
-    return res.send("success");
+    const dl_response = await axios.get("http://localhost:5000/model?filename=" + image + "&kind=" + kind)
+    return res.send(dl_response.data);
   } catch (error) {
     console.error(error);
     return next(error);
