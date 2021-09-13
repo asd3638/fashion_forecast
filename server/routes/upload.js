@@ -1,10 +1,10 @@
-const express = require('express');
-const multer = require('multer');
-const path = require('path');
-const pythonShell = require('python-shell');
-const axios = require('axios');
+const express = require("express");
+const multer = require("multer");
+const path = require("path");
+const pythonShell = require("python-shell");
+const axios = require("axios");
 
-const { Look, Temp } = require('../models');
+const { Look, Temp } = require("../models");
 
 const router = express.Router();
 
@@ -26,13 +26,14 @@ router.post("/get", upload.single("image"), async (req, res, next) => {
   const data = {
     userId,
     image,
-    kind
-  }
+    kind,
+  };
   try {
     await Temp.create(data);
-    const dl_response = await axios.get("http://localhost:5000/model?filename=" + image)
-    console.log(dl_response.data)
-    return res.send("success");
+    const dl_response = await axios.get(
+      "http://localhost:5000/model?filename=" + image + "&kind=" + kind
+    );
+    return res.send(dl_response.data);
   } catch (error) {
     console.error(error);
     return next(error);
@@ -45,7 +46,7 @@ router.get("/read/:id", async (req, res, next) => {
     if (look) {
       res.status(200).send(study);
     } else {
-      res.status(404).send('no study');
+      res.status(404).send("no study");
     }
   } catch (error) {
     console.error(error);
