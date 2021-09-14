@@ -35,12 +35,12 @@ function UploadSection() {
         <h1 class="quesetion">무엇을 입을 예정인가요?</h1>
         <div class="input-box-group">
           <div class="input-box-row">
-            <InputBox title="상의" />
-            <InputBox title="하의" />
+            <InputBox title="상의" kind="top" />
+            <InputBox title="하의" kind="bottom" />
           </div>
           <div class="input-box-row">
-            <InputBox title="아우터" />
-            <InputBox title="원피스" />
+            <InputBox title="아우터" kind="outer" />
+            <InputBox title="원피스" kind="op" />
           </div>
         </div>
         <SeeResultBtn>결과 보기</SeeResultBtn>
