@@ -48,15 +48,15 @@ function WeatherSection() {
         console.log('Longitude: ' + crd.longitude);
         console.log('More or less ' + crd.accuracy + ' meters.');
         const myKey="df125f43340b93450ebd9da8d000b7d7"
-        const url=`https://api.openweathermap.org/data/2.5/onecall?lat=${crd.latitude}&lon=${crd.longitude}&appid=${myKey}`
+        const url=`http://api.openweathermap.org/data/2.5/weather?lat=${crd.latitude}&lon=${crd.longitude}&appid=${myKey}`
         try {
             axios.get(url).then(response => {
               console.log(response)
               setWeather({
-                "temp": Math.floor(response.data.current.temp - 273.15),
-                "description": response.data.current.weather[0].description,
-                "min": Math.floor(response.data.daily[0].temp.min - 273.15),
-                "max": Math.floor(response.data.daily[0].temp.max - 273.15)
+                "temp": Math.floor(response.data.main.temp - 273.15),
+                "description": response.data.weather[0].description,
+                "min": Math.floor(response.data.main.temp_min - 273.15),
+                "max": Math.floor(response.data.main.temp_max - 273.15)
               });
               }
             )
