@@ -4,7 +4,7 @@
   "description": "fashion forecast server",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app"
+    "start": "node app.js"
   },
   "author": "jihye",
   "license": "ISC",
