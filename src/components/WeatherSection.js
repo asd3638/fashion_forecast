@@ -43,6 +43,7 @@ function WeatherSection() {
         };
       function success(pos) {
         const crd = pos.coords;
+        console.log(pos);
         console.log('Your current position is:');
         console.log('Latitude : ' + crd.latitude);
         console.log('Longitude: ' + crd.longitude);
@@ -56,7 +57,8 @@ function WeatherSection() {
                 "temp": Math.floor(response.data.main.temp - 273.15),
                 "description": response.data.weather[0].description,
                 "min": Math.floor(response.data.main.temp_min - 273.15),
-                "max": Math.floor(response.data.main.temp_max - 273.15)
+                "max": Math.floor(response.data.main.temp_max - 273.15),
+                "location": response.data.name
               });
               }
             )
@@ -70,14 +72,14 @@ function WeatherSection() {
       navigator.geolocation.getCurrentPosition(success, error, options);
     };
     fetchWeather();
-  }, [weather]);
+  }, []);
 
   return (
     <>
       <Wrapper>
         <Location>
           <i class="fas fa-map-marker-alt"></i>
-          <span>문정동</span>
+          <span>{weather.location}</span>
         </Location>
         <Weather>
           <h1 class="temperature">{weather.temp}&deg;</h1>
