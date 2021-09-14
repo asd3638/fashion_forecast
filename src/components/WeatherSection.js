@@ -1,11 +1,11 @@
 import styled from "styled-components/macro";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const Wrapper = styled.section`
-  padding: 0 2rem;
   margin-bottom: 5.5rem;
 `;
 const Location = styled.div`
-  margin-bottom: 1rem;
   & > i {
     margin-right: 1rem;
   }
@@ -26,24 +26,66 @@ const Weather = styled.div`
     justify-content: flex-end;
     align-items: flex-end;
     & > span {
-      margin-bottom: 1.4rem;
+      margin-bottom: 0.6rem;
     }
   }
 `;
 
 function WeatherSection() {
+  const [weather, setWeather] = useState({});
+
+  useEffect(() => {
+    const fetchWeather = async () => {
+      var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      };
+      function success(pos) {
+        const crd = pos.coords;
+        console.log(pos);
+        console.log("Your current position is:");
+        console.log("Latitude : " + crd.latitude);
+        console.log("Longitude: " + crd.longitude);
+        console.log("More or less " + crd.accuracy + " meters.");
+        const myKey = "df125f43340b93450ebd9da8d000b7d7";
+        const url = `http://api.openweathermap.org/data/2.5/weather?lat=${crd.latitude}&lon=${crd.longitude}&appid=${myKey}`;
+        try {
+          axios.get(url).then((response) => {
+            console.log(response);
+            setWeather({
+              temp: Math.floor(response.data.main.temp - 273.15),
+              description: response.data.weather[0].description,
+              min: Math.floor(response.data.main.temp_min - 273.15),
+              max: Math.floor(response.data.main.temp_max - 273.15),
+              location: response.data.name,
+            });
+          });
+          console.log(weather);
+        } catch (e) {}
+      }
+      function error(err) {
+        console.warn("ERROR(" + err.code + "): " + err.message);
+      }
+      navigator.geolocation.getCurrentPosition(success, error, options);
+    };
+    fetchWeather();
+  }, []);
+
   return (
     <>
       <Wrapper>
         <Location>
           <i class="fas fa-map-marker-alt"></i>
-          <span>문정동</span>
+          <span>{weather.location}</span>
         </Location>
         <Weather>
-          <h1 class="temperature">27&deg;</h1>
+          <h1 class="temperature">{weather.temp}&deg;</h1>
           <div class="more-info">
-            <span>흐림</span>
-            <span>27&deg; / 19&deg;</span>
+            <span>{weather.description}</span>
+            <span>
+              {weather.max}&deg; / {weather.min}&deg;
+            </span>
           </div>
         </Weather>
       </Wrapper>
