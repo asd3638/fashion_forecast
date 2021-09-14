@@ -21,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 1.6rem;
-    padding: var(--horizontal-space);
+    height: 100vh;
   }
   a {
     color: inherit;

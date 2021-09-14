@@ -1,9 +1,11 @@
 import styled from "styled-components/macro";
 
 const Wrapper = styled.section`
+  padding: 0 2rem;
   margin-bottom: 5.5rem;
 `;
 const Location = styled.div`
+  margin-bottom: 1rem;
   & > i {
     margin-right: 1rem;
   }
@@ -24,7 +26,7 @@ const Weather = styled.div`
     justify-content: flex-end;
     align-items: flex-end;
     & > span {
-      margin-bottom: 0.6rem;
+      margin-bottom: 1.4rem;
     }
   }
 `;
