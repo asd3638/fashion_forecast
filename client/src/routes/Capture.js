@@ -5,6 +5,7 @@ function Capture() {
   // const [isCameraOpen, setIsCameraOpen] = useState(false);
   const [cardImage, setCardImage] = useState();
 
+
   return (
     <>
       <Camera
