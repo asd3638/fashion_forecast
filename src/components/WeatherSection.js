@@ -12,6 +12,10 @@ const Location = styled.div`
   & > span {
     font-size: 1.4rem;
   }
+  @media screen and (min-width: 612px) {
+    display: flex;
+    justify-content: center;
+  }
 `;
 const Weather = styled.div`
   display: flex;
@@ -27,6 +31,21 @@ const Weather = styled.div`
     align-items: flex-end;
     & > span {
       margin-bottom: 0.6rem;
+    }
+  }
+  @media screen and (min-width: 612px) {
+    flex-direction: column;
+    align-items: center;
+    & > .temperature {
+      font-size: 12rem;
+      margin-left: 5rem;
+    }
+    & > .more-info {
+      justify-content: center;
+      align-items: center;
+      & > span {
+        font-size: 1.8rem;
+      }
     }
   }
 `;

@@ -16,6 +16,14 @@ const Wrapper = styled.section`
       margin-bottom: 1rem;
     }
   }
+  @media screen and (min-width: 612px) {
+    & > .input-box-group {
+      display: flex;
+      & > .input-box-row + .input-box-row {
+        margin-left: 1rem;
+      }
+    }
+  }
 `;
 const SeeResultBtn = styled.div`
   display: flex;

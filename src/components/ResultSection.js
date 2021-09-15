@@ -17,6 +17,11 @@ const Wrapper = styled.section`
       font-weight: 700;
     }
   }
+  @media screen and (min-width: 612px) {
+    display: flex;
+    flex-direction: column;
+    padding: 0 12rem;
+  }
 `;
 
 function ResultSection() {
