@@ -1,6 +1,6 @@
 import styled from "styled-components/macro";
 import { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import Capture from "./Capture";
 
@@ -109,31 +109,34 @@ function InputBox({ title, kind }) {
   }
   return (
     <>
-      <input
-        ref={imageInputRef}
-        style={{ display: "none" }}
-        type="file"
-        accept="image/jpg,impge/png,image/jpeg,"
-        name="image"
-        onChange={onImageInput}
-      />
-      <Modal
-        isOpen={modalIsOpen}
-        // onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Example Modal"
-      >
-        <h1>둘 중에서 선택하세요</h1>
-        <button onClick={onImageInputBtnClick}>디바이스에서 찾기</button>
-        <button onClick={openCameraModal}>사진 찍기</button>
-      </Modal>
-
-      <CameraModal isOpen={cameraModalIsOpen} onRequestClose={closeCameraModal}>
-        <Capture />
-      </CameraModal>
-
       <Wrapper>
+        <input
+          ref={imageInputRef}
+          style={{ display: "none" }}
+          type="file"
+          accept="image/jpg,impge/png,image/jpeg,"
+          name="image"
+          onChange={onImageInput}
+        />
+        <Modal
+          isOpen={modalIsOpen}
+          // onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+        >
+          <h1>둘 중에서 선택하세요</h1>
+          <button onClick={onImageInputBtnClick}>디바이스에서 찾기</button>
+          <button onClick={openCameraModal}>사진 찍기</button>
+        </Modal>
+
+        <CameraModal
+          isOpen={cameraModalIsOpen}
+          onRequestClose={closeCameraModal}
+        >
+          <Capture />
+        </CameraModal>
+
         <ImageShow onClick={openModal}>
           {preview ? (
             <img class="bg-img" src={preview.previewURL} alt="preview" />
