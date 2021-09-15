@@ -70,7 +70,7 @@ function WeatherSection() {
       navigator.geolocation.getCurrentPosition(success, error, options);
     };
     fetchWeather();
-  });
+  }, []);
 
   return (
     <>
