@@ -2,6 +2,7 @@ import styled from "styled-components/macro";
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
+import Capture from "./Capture";
 
 const Wrapper = styled.div`
   display: flex;
@@ -56,10 +57,16 @@ const customStyles = {
   },
 };
 
+const CameraModal = (props) => {
+  const { isOpen } = props;
+  return isOpen ? <Modal {...props} /> : null;
+};
+
 function InputBox({ title, kind }) {
   const imageInputRef = useRef();
 
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [cameraModalIsOpen, setIsCameraOpen] = useState(false);
   const [preview, setPreview] = useState();
 
   function onImageInput(e) {
@@ -90,9 +97,15 @@ function InputBox({ title, kind }) {
     setIsOpen(false);
   }
   function onImageInputBtnClick(e) {
-    e.preventDefault();
     imageInputRef.current.click();
     closeModal();
+  }
+  function openCameraModal(e) {
+    closeModal();
+    setIsCameraOpen(true);
+  }
+  function closeCameraModal(e) {
+    setIsCameraOpen(false);
   }
   return (
     <>
@@ -113,18 +126,18 @@ function InputBox({ title, kind }) {
       >
         <h1>둘 중에서 선택하세요</h1>
         <button onClick={onImageInputBtnClick}>디바이스에서 찾기</button>
-        <Link to="/capture">
-          <button>사진 찍기</button>
-        </Link>
+        <button onClick={openCameraModal}>사진 찍기</button>
       </Modal>
+
+      <CameraModal isOpen={cameraModalIsOpen} onRequestClose={closeCameraModal}>
+        <Capture />
+      </CameraModal>
 
       <Wrapper>
         <ImageShow onClick={openModal}>
           {preview ? (
             <img class="bg-img" src={preview.previewURL} alt="preview" />
-          ) : (
-            ""
-          )}
+          ) : null}
           <UploadBtn>
             <i class="fas fa-plus"></i>
           </UploadBtn>

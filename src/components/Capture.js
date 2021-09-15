@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Camera } from "../components/Camera";
+import { Camera } from "./Camera";
 
 function Capture() {
   // const [isCameraOpen, setIsCameraOpen] = useState(false);
   const [cardImage, setCardImage] = useState();
-
 
   return (
     <>
