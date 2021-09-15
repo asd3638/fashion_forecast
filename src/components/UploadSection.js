@@ -1,4 +1,5 @@
 import styled from "styled-components/macro";
+import { StyledBase } from "../global-styles";
 import InputBox from "../components/InputBox";
 
 const Wrapper = styled.section`
@@ -25,15 +26,12 @@ const Wrapper = styled.section`
     }
   }
 `;
-const SeeResultBtn = styled.div`
+const SeeResultBtn = styled(StyledBase)`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 25rem;
-  height: 4rem;
-  border: 1px solid black;
-  border-radius: 0.7rem;
-  background-color: white;
+  width: 24rem;
+  height: 4.5rem;
 `;
 
 function UploadSection() {
@@ -51,7 +49,7 @@ function UploadSection() {
             <InputBox title="원피스" kind="op" />
           </div>
         </div>
-        <SeeResultBtn>결과 보기</SeeResultBtn>
+        <SeeResultBtn buttonStyle>결과 보기</SeeResultBtn>
       </Wrapper>
     </>
   );

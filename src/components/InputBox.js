@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 // import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import Capture from "./Capture";
+import { StyledBase } from "../global-styles";
 
 const Wrapper = styled.div`
   display: flex;
@@ -16,25 +17,29 @@ const Wrapper = styled.div`
     letter-spacing: 0.2rem;
   }
 `;
-const ImageShow = styled.div`
+const Button = styled(StyledBase)`
+  display: inline-flex;
+  padding: 1rem 2rem;
+  & + & {
+    margin-left: 1rem;
+  }
+  & > i {
+    margin-right: 1rem;
+  }
+`;
+const ImageShow = styled(StyledBase)`
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 12rem;
   height: 12rem;
-  border-radius: 15%;
-  background-color: black;
   margin-bottom: 0.4rem;
+  overflow: hidden;
   & .bg-img {
     position: absolute;
     width: inherit;
     height: inherit;
-    border-radius: inherit;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
   }
 `;
 const UploadBtn = styled.div`
@@ -43,10 +48,14 @@ const UploadBtn = styled.div`
   align-items: center;
   width: 3rem;
   height: 3rem;
-  background-color: white;
+  background-color: black;
   border-radius: 50%;
+  & .fa-plus {
+    color: white;
+  }
 `;
 const customStyles = {
+  overlay: { backgroundColor: "rgba(0, 0, 0, 0.7)" },
   content: {
     top: "50%",
     left: "50%",
@@ -54,6 +63,14 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
+    width: "35rem",
+    height: "15rem",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-around",
+    alignItems: "center",
+    border: "2.5px solid black",
+    borderRadius: "1rem",
   },
 };
 
@@ -125,9 +142,17 @@ function InputBox({ title, kind }) {
           style={customStyles}
           contentLabel="Example Modal"
         >
-          <h1>둘 중에서 선택하세요</h1>
-          <button onClick={onImageInputBtnClick}>디바이스에서 찾기</button>
-          <button onClick={openCameraModal}>사진 찍기</button>
+          <h1>사진을 어떻게 추가하시겠어요?</h1>
+          <div>
+            <Button buttonStyle onClick={onImageInputBtnClick}>
+              <i class="far fa-image"></i>
+              <span>앨범</span>
+            </Button>
+            <Button buttonStyle onClick={openCameraModal}>
+              <i class="fas fa-camera"></i>
+              <span>카메라</span>
+            </Button>
+          </div>
         </Modal>
 
         <CameraModal
