@@ -70,7 +70,6 @@ function InputBox({ title, kind }) {
   const [preview, setPreview] = useState();
 
   function onImageInput(e) {
-    let reader = new FileReader();
     const img = e.target.files[0];
     const formData = new FormData();
     formData.append("file", img);
@@ -82,6 +81,7 @@ function InputBox({ title, kind }) {
       kind: kind,
     };
     // 이미지 미리보기
+    let reader = new FileReader();
     reader.onloadend = () => {
       setPreview({
         file: img,
@@ -134,7 +134,7 @@ function InputBox({ title, kind }) {
           isOpen={cameraModalIsOpen}
           onRequestClose={closeCameraModal}
         >
-          <Capture />
+          <Capture kind={kind} />
         </CameraModal>
 
         <ImageShow onClick={openModal}>
