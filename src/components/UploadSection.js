@@ -64,6 +64,7 @@ function UploadSection() {
   
 
   const handleUpload = (img, kind) => {
+    console.log(kind)
     if (kind === "top") {
       formData.append("top", img);
     }
@@ -76,6 +77,7 @@ function UploadSection() {
     if (kind === "op") {
       formData.append("op", img);
     }
+    console.log(formData)
   };
   const onSubmitHandler = async (e) => {
     const config = {
