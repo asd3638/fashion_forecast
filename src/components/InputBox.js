@@ -1,5 +1,5 @@
 import styled from "styled-components/macro";
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 
@@ -56,7 +56,7 @@ const customStyles = {
   },
 };
 
-function InputBox({ title, kind }) {
+function InputBox({kind, handleUpload}) {
   const imageInputRef = useRef();
 
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -65,15 +65,7 @@ function InputBox({ title, kind }) {
   function onImageInput(e) {
     let reader = new FileReader();
     const img = e.target.files[0];
-    const formData = new FormData();
-    formData.append("file", img);
-    // console.log(formData);
-    // for (const keyValue of formData) console.log(keyValue); // ["img", File] File은 객체
-    const obj = {
-      image: formData,
-      userId: "",
-      kind: kind,
-    };
+    handleUpload(img, kind);
     // 이미지 미리보기
     reader.onloadend = () => {
       setPreview({
@@ -129,7 +121,7 @@ function InputBox({ title, kind }) {
             <i class="fas fa-plus"></i>
           </UploadBtn>
         </ImageShow>
-        <span class="input-title">{title}</span>
+        <span class="input-title">{kind}</span>
       </Wrapper>
     </>
   );

@@ -1,5 +1,7 @@
 import styled from "styled-components/macro";
 import InputBox from "../components/InputBox";
+import React, { useState, useEffect } from "react";
+import api from "../Api/api";
 
 const Wrapper = styled.section`
   display: flex;
@@ -29,21 +31,56 @@ const SeeResultBtn = styled.div`
 `;
 
 function UploadSection() {
+  const formData = new FormData();
+
+  const handleUpload = (img, kind) => {
+    if (kind === "top") {
+      formData.append("top", img)
+    }
+    if (kind === "bottom") {
+      formData.append("bottom", img)
+    }
+    if (kind === "outer") {
+      formData.append("outer", img)
+    }
+    if (kind === "op") {
+      formData.append("op", img)
+    }
+  }
+
+  const onSubmitHandler = (e) => {
+    const config = {
+      header: {
+        'Content-Type':'multipart/form-data'
+      }
+    }
+    e.preventDefault();
+    api
+      .post("/upload/post", formData, config)
+      .then((res) => {
+        // 서버 작업 성공하면
+        if (res.status  === 200) {
+          console.log(res.data)
+        }
+      })
+      .catch();
+  };
+
   return (
     <>
       <Wrapper>
         <h1 class="quesetion">무엇을 입을 예정인가요?</h1>
         <div class="input-box-group">
           <div class="input-box-row">
-            <InputBox title="상의" kind="top" />
-            <InputBox title="하의" kind="bottom" />
+            <InputBox title="상의" kind="top" handleUpload={handleUpload}/>
+            <InputBox title="하의" kind="bottom" handleUpload={handleUpload}/>
           </div>
           <div class="input-box-row">
-            <InputBox title="아우터" kind="outer" />
-            <InputBox title="원피스" kind="op" />
+            <InputBox title="아우터" kind="outer" handleUpload={handleUpload}/>
+            <InputBox title="원피스" kind="op" handleUpload={handleUpload}/>
           </div>
         </div>
-        <SeeResultBtn>결과 보기</SeeResultBtn>
+        <SeeResultBtn onClick={onSubmitHandler}>결과 보기</SeeResultBtn>
       </Wrapper>
     </>
   );
