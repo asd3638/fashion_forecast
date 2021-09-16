@@ -31,8 +31,8 @@ const ImageShow = styled(StyledBase)`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 12rem;
-  height: 12rem;
+  width: ${(props) => (props.size ? `${props.size}rem` : "12rem")};
+  height: ${(props) => (props.size ? `${props.size}rem` : "12rem")};
   margin-bottom: 0.4rem;
   overflow: hidden;
   & .bg-img {
@@ -165,7 +165,7 @@ function InputBox({ kind, handleUpload }) {
           />
         </CameraModal>
 
-        <ImageShow onClick={openModal}>
+        <ImageShow size={15} onClick={openModal}>
           {preview ? (
             <img class="bg-img" src={preview.previewURL} alt="preview" />
           ) : null}
