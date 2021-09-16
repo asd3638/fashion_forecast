@@ -1,3 +1,4 @@
+import styled, { css } from "styled-components/macro";
 import { createGlobalStyle } from "styled-components/macro";
 import reset from "styled-reset";
 
@@ -27,6 +28,17 @@ const GlobalStyle = createGlobalStyle`
     color: inherit;
     text-decoration: none;
   }
+`;
+
+// custom styles
+const simpleStyle = css`
+  background-color: white;
+  border: 2.5px solid black;
+  border-radius: ${(props) => (props.roundStyle ? "50%" : "1rem")};
+  border-width: ${(props) => (props.buttonStyle ? "2.5px 2.5px 5px" : "")};
+`;
+export const StyledBase = styled.div`
+  ${simpleStyle}
 `;
 
 export default GlobalStyle;

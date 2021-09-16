@@ -1,6 +1,7 @@
 import styled from "styled-components/macro";
 const dummyOutfits = ["긴팔 니트웨어", "7부 데님", "긴팔 무스탕"];
 
+
 const Wrapper = styled.section`
   white-space: pre;
   & .outfit-prediction {
@@ -16,6 +17,11 @@ const Wrapper = styled.section`
       font-size: 3rem;
       font-weight: 700;
     }
+  }
+  @media screen and (min-width: 612px) {
+    display: flex;
+    flex-direction: column;
+    padding: 0 12rem;
   }
 `;
 

@@ -1,4 +1,5 @@
 import styled, { keyframes, css } from "styled-components";
+import { StyledBase } from "../global-styles";
 import { useState, useRef } from "react";
 import Measure from "react-measure";
 import { useUserMedia } from "../hooks/use-user-media";
@@ -44,16 +45,6 @@ export const Video = styled.video`
     -webkit-appearance: none;
   }
 `;
-export const Overlay = styled.div`
-  /* position: absolute;
-  top: 20px;
-  right: 20px;
-  bottom: 20px;
-  left: 20px;
-  box-shadow: 0px 0px 20px 56px rgba(0, 0, 0, 0.6);
-  border: 1px solid #ffffff;
-  border-radius: 10px; */
-`;
 export const Flash = styled.div`
   position: absolute;
   top: 0;
@@ -71,9 +62,8 @@ export const Flash = styled.div`
     }
   }}
 `;
-export const Button = styled.button`
+export const Button = styled(StyledBase)`
   position: absolute;
-  /* top: 0px; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -84,11 +74,9 @@ export const Button = styled.button`
   max-width: 200px;
   max-height: 200px;
   margin-bottom: 1rem;
-  border-radius: 50%;
-  background: silver;
 `;
 const SaveButton = styled(Button)`
-  left: 0;
+  left: 2rem;
 `;
 // /////////////////////////////////////////////
 
@@ -197,8 +185,6 @@ export function Camera({ onCapture, onClear }) {
               }}
             />
 
-            <Overlay hidden={!isVideoPlaying} />
-
             <Canvas
               ref={canvasRef}
               width={container.width}
@@ -211,7 +197,11 @@ export function Camera({ onCapture, onClear }) {
             />
 
             {isVideoPlaying && (
-              <Button onClick={isCanvasEmpty ? handleCapture : handleClear}>
+              <Button
+                roundStyle
+                buttonStyle
+                onClick={isCanvasEmpty ? handleCapture : handleClear}
+              >
                 {isCanvasEmpty ? (
                   <i class="fas fa-camera"></i>
                 ) : (
@@ -221,7 +211,7 @@ export function Camera({ onCapture, onClear }) {
             )}
 
             {!isCanvasEmpty && (
-              <SaveButton onClick={handleSave}>
+              <SaveButton roundStyle buttonStyle onClick={handleSave}>
                 <i class="fas fa-check"></i>
               </SaveButton>
             )}

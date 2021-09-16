@@ -1,4 +1,5 @@
 import styled from "styled-components/macro";
+import { StyledBase } from "../global-styles";
 import InputBox from "../components/InputBox";
 import React, { useState, useEffect } from "react";
 import api from "../Api/api";
@@ -18,16 +19,21 @@ const Wrapper = styled.section`
       margin-bottom: 1rem;
     }
   }
+  @media screen and (min-width: 612px) {
+    & > .input-box-group {
+      display: flex;
+      & > .input-box-row + .input-box-row {
+        margin-left: 1rem;
+      }
+    }
+  }
 `;
-const SeeResultBtn = styled.div`
+const SeeResultBtn = styled(StyledBase)`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 25rem;
-  height: 4rem;
-  border: 1px solid black;
-  border-radius: 0.7rem;
-  background-color: white;
+  width: 24rem;
+  height: 4.5rem;
 `;
 
 function UploadSection() {
@@ -80,7 +86,7 @@ function UploadSection() {
             <InputBox title="원피스" kind="op" handleUpload={handleUpload}/>
           </div>
         </div>
-        <SeeResultBtn onClick={onSubmitHandler}>결과 보기</SeeResultBtn>
+        <SeeResultBtn buttonStyle onClick={onSubmitHandler}>결과 보기</SeeResultBtn>
       </Wrapper>
     </>
   );
