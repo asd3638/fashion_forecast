@@ -62,7 +62,7 @@ function UploadSection() {
     }
     e.preventDefault();
     api
-      .post("/upload/post", formData, config)
+      .post("/upload/post/1", formData, config)
       .then((res) => {
         // 서버 작업 성공하면
         if (res.status  === 200) {
