@@ -1,6 +1,5 @@
 import styled from "styled-components/macro";
-import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
 import Modal from "react-modal";
 import Capture from "./Capture";
 import { StyledBase } from "../global-styles";
@@ -78,17 +77,18 @@ const CameraModal = (props) => {
   return isOpen ? <Modal {...props} /> : null;
 };
 
-function InputBox({kind, handleUpload}) {
+function InputBox({ kind, handleUpload }) {
   const imageInputRef = useRef();
 
   const [modalIsOpen, setIsOpen] = useState(false);
   const [cameraModalIsOpen, setIsCameraOpen] = useState(false);
   const [preview, setPreview] = useState();
 
-  function onImageInput(e) {
-    const img = e.target.files[0];
-    handleUpload(img, kind);
-    // 이미지 미리보기
+  useEffect(() => {
+    Modal.setAppElement("body");
+  }, []);
+
+  function showPreview(img) {
     let reader = new FileReader();
     reader.onloadend = () => {
       setPreview({
@@ -96,7 +96,12 @@ function InputBox({kind, handleUpload}) {
         previewURL: reader.result,
       });
     };
-    reader.readAsDataURL(img);
+    if (img) reader.readAsDataURL(img);
+  }
+  function onImageInput(e) {
+    const img = e.target.files[0];
+    showPreview(img);
+    handleUpload(img, kind);
   }
   function openModal() {
     setIsOpen(true);
@@ -108,11 +113,11 @@ function InputBox({kind, handleUpload}) {
     imageInputRef.current.click();
     closeModal();
   }
-  function openCameraModal(e) {
+  function openCameraModal() {
     closeModal();
     setIsCameraOpen(true);
   }
-  function closeCameraModal(e) {
+  function closeCameraModal() {
     setIsCameraOpen(false);
   }
   return (
@@ -150,7 +155,14 @@ function InputBox({kind, handleUpload}) {
           isOpen={cameraModalIsOpen}
           onRequestClose={closeCameraModal}
         >
-          <Capture kind={kind} />
+          <Capture
+            kind={kind}
+            onSelect={(file) => {
+              showPreview(file);
+              handleUpload(file, kind);
+              closeCameraModal();
+            }}
+          />
         </CameraModal>
 
         <ImageShow onClick={openModal}>
