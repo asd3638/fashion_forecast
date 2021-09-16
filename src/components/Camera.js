@@ -75,7 +75,7 @@ export const Button = styled(StyledBase)`
   max-height: 200px;
   margin-bottom: 1rem;
 `;
-const SaveButton = styled(Button)`
+const SelectButton = styled(Button)`
   left: 2rem;
 `;
 // /////////////////////////////////////////////
@@ -85,7 +85,7 @@ const CAPTURE_OPTIONS = {
   video: { facingMode: "environment" },
 };
 
-export function Camera({ onCapture, onClear }) {
+export function Camera({ onSelect, onClear }) {
   const canvasRef = useRef();
   const videoRef = useRef();
 
@@ -138,7 +138,6 @@ export function Camera({ onCapture, onClear }) {
       container.height
     );
 
-    // canvasRef.current.toBlob((blob) => onCapture(blob), "image/jpeg", 1);
     setIsCanvasEmpty(false);
     setIsFlashing(true);
   }
@@ -147,13 +146,11 @@ export function Camera({ onCapture, onClear }) {
     const context = canvasRef.current.getContext("2d");
     context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
     setIsCanvasEmpty(true);
-    onClear();
+    // onClear();
   }
 
-  function handleSave() {
-    // TBD
-    alert("saved");
-    canvasRef.current.toBlob((blob) => onCapture(blob), "image/jpeg", 1);
+  function handleSelect() {
+    canvasRef.current.toBlob((blob) => onSelect(blob), "image/jpeg", 1);
   }
 
   if (!mediaStream) {
@@ -211,9 +208,9 @@ export function Camera({ onCapture, onClear }) {
             )}
 
             {!isCanvasEmpty && (
-              <SaveButton roundStyle buttonStyle onClick={handleSave}>
+              <SelectButton roundStyle buttonStyle onClick={handleSelect}>
                 <i class="fas fa-check"></i>
-              </SaveButton>
+              </SelectButton>
             )}
           </Container>
         </Wrapper>
