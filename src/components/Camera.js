@@ -146,7 +146,6 @@ export function Camera({ onSelect, onClear }) {
     const context = canvasRef.current.getContext("2d");
     context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
     setIsCanvasEmpty(true);
-    // onClear();
   }
 
   function handleSelect() {
