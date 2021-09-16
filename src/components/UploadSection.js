@@ -1,9 +1,8 @@
 import styled from "styled-components/macro";
 import { StyledBase } from "../global-styles";
 import InputBox from "../components/InputBox";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import api from "../Api/api";
-const dummyOutfits = ["긴팔 니트웨어", "7부 데님", "긴팔 무스탕"];
 
 const Wrapper = styled.section`
   display: flex;
@@ -61,6 +60,8 @@ const ResultContainer = styled.section`
 
 function UploadSection() {
   const formData = new FormData();
+  const [clothesResult, setClothesResult] = useState([]);
+  
 
   const handleUpload = (img, kind) => {
     if (kind === "top") {
@@ -76,8 +77,7 @@ function UploadSection() {
       formData.append("op", img);
     }
   };
-
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     const config = {
       header: {
         "Content-Type": "multipart/form-data",
@@ -89,11 +89,31 @@ function UploadSection() {
       .then((res) => {
         // 서버 작업 성공하면
         if (res.status === 200) {
-          console.log(res.data);
+          setClothesResult(res.data)
         }
       })
       .catch();
   };
+  let result_top;
+  let result_bottom;
+  let result_outer;
+  let result_op;
+
+  if (clothesResult.length !== 0) {
+    console.log(clothesResult)
+    if (clothesResult.top) {
+      result_top = <p class="outfit-prediction">{`상의 ${clothesResult.top}을(를) 입으셨군요?`}</p>
+    }
+    if (clothesResult.bottom) {
+      result_bottom = <p class="outfit-prediction">{`하의 ${clothesResult.bottom}을(를) 입으셨군요?`}</p>
+    }
+    if (clothesResult.outer) {
+      result_outer = <p class="outfit-prediction">{`아우터 ${clothesResult.outer}을(를) 입으셨군요?`}</p>
+    }
+    if (clothesResult.op) {
+      result_op = <p class="outfit-prediction">{`원피스 ${clothesResult.op}을(를) 입으셨군요?`}</p>
+    }
+  }
 
   return (
     <>
@@ -101,12 +121,12 @@ function UploadSection() {
         <h1 class="quesetion">무엇을 입을 예정인가요?</h1>
         <div class="input-box-group">
           <div class="input-box-row">
-            <InputBox title="상의" kind="top" handleUpload={handleUpload} />
-            <InputBox title="하의" kind="bottom" handleUpload={handleUpload} />
+            <InputBox kind="top" handleUpload={handleUpload} />
+            <InputBox kind="bottom" handleUpload={handleUpload} />
           </div>
           <div class="input-box-row">
-            <InputBox title="아우터" kind="outer" handleUpload={handleUpload} />
-            <InputBox title="원피스" kind="op" handleUpload={handleUpload} />
+            <InputBox kind="outer" handleUpload={handleUpload} />
+            <InputBox kind="op" handleUpload={handleUpload} />
           </div>
         </div>
         <SeeResultBtn buttonStyle onClick={onSubmitHandler}>
@@ -115,10 +135,12 @@ function UploadSection() {
       </Wrapper>
 
       <ResultContainer>
-        <p class="outfit-prediction">
-          {`${dummyOutfits.join(",\n")}을(를) 입으셨군요?`}
-        </p>
+        
         <div class="result">
+          {result_top}
+          {result_bottom}
+          {result_outer}
+          {result_op}
           <p>
             지금 옷차림은 날씨에...
             <br />
