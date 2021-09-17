@@ -108,7 +108,7 @@ export function Camera({ onSelect, onClear }) {
   }
 
   function handleResize(contentRect) {
-    console.log(contentRect);
+    // console.log(contentRect);
     setContainer({
       width: contentRect.bounds.width,
       height: Math.round(contentRect.bounds.width / aspectRatio),
@@ -199,16 +199,16 @@ export function Camera({ onSelect, onClear }) {
                 onClick={isCanvasEmpty ? handleCapture : handleClear}
               >
                 {isCanvasEmpty ? (
-                  <i class="fas fa-camera"></i>
+                  <i className="fas fa-camera"></i>
                 ) : (
-                  <i class="fas fa-undo-alt"></i>
+                  <i className="fas fa-undo-alt"></i>
                 )}
               </Button>
             )}
 
             {!isCanvasEmpty && (
               <SelectButton roundStyle buttonStyle onClick={handleSelect}>
-                <i class="fas fa-check"></i>
+                <i className="fas fa-check"></i>
               </SelectButton>
             )}
           </Container>

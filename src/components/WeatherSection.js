@@ -1,5 +1,6 @@
 import styled from "styled-components/macro";
 import { useState, useEffect } from "react";
+import { WEATHER_API_KEY } from "../Api/api";
 import axios from "axios";
 
 const Wrapper = styled.section`
@@ -53,54 +54,54 @@ const Weather = styled.div`
 function WeatherSection() {
   const [weather, setWeather] = useState({});
 
-  useEffect(() => {
-    const fetchWeather = async () => {
-      var options = {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0,
-      };
-      function success(pos) {
-        const crd = pos.coords;
-        console.log(pos);
-        console.log("Your current position is:");
-        console.log("Latitude : " + crd.latitude);
-        console.log("Longitude: " + crd.longitude);
-        console.log("More or less " + crd.accuracy + " meters.");
-        const myKey = "df125f43340b93450ebd9da8d000b7d7";
-        const url = `http://api.openweathermap.org/data/2.5/weather?lat=${crd.latitude}&lon=${crd.longitude}&appid=${myKey}`;
-        try {
-          axios.get(url).then((response) => {
-            console.log(response);
-            setWeather({
-              temp: Math.floor(response.data.main.temp - 273.15),
-              description: response.data.weather[0].description,
-              min: Math.floor(response.data.main.temp_min - 273.15),
-              max: Math.floor(response.data.main.temp_max - 273.15),
-              location: response.data.name,
-            });
-          });
-          console.log(weather);
-        } catch (e) {}
-      }
-      function error(err) {
-        console.warn("ERROR(" + err.code + "): " + err.message);
-      }
-      navigator.geolocation.getCurrentPosition(success, error, options);
+  useEffect(() => fetchWeather(), []);
+
+  const fetchWeather = async () => {
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0,
     };
-    fetchWeather();
-  }, []);
+    function success(pos) {
+      const crd = pos.coords;
+      // console.log(pos);
+      // console.log("Your current position is:");
+      // console.log("Latitude : " + crd.latitude);
+      // console.log("Longitude: " + crd.longitude);
+      // console.log("More or less " + crd.accuracy + " meters.");
+      const url = `http://api.openweathermap.org/data/2.5/weather?lat=${crd.latitude}&lon=${crd.longitude}&appid=${WEATHER_API_KEY}`;
+      try {
+        axios.get(url).then((response) => {
+          console.log("response");
+          console.log(response);
+          setWeather({
+            temp: Math.floor(response.data.main.temp - 273.15),
+            description: response.data.weather[0].description,
+            min: Math.floor(response.data.main.temp_min - 273.15),
+            max: Math.floor(response.data.main.temp_max - 273.15),
+            location: response.data.name,
+          });
+        });
+        console.log("weather");
+        console.log(weather);
+      } catch (e) {}
+    }
+    function error(err) {
+      console.warn("ERROR(" + err.code + "): " + err.message);
+    }
+    navigator.geolocation.getCurrentPosition(success, error, options);
+  };
 
   return (
     <>
       <Wrapper>
         <Location>
-          <i class="fas fa-map-marker-alt"></i>
+          <i className="fas fa-map-marker-alt"></i>
           <span>{weather.location}</span>
         </Location>
         <Weather>
-          <h1 class="temperature">{weather.temp}&deg;</h1>
-          <div class="more-info">
+          <h1 className="temperature">{weather.temp}&deg;</h1>
+          <div className="more-info">
             <span>{weather.description}</span>
             <span>
               {weather.max}&deg; / {weather.min}&deg;

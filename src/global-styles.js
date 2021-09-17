@@ -3,9 +3,7 @@ import { createGlobalStyle } from "styled-components/macro";
 import reset from "styled-reset";
 
 const GlobalStyle = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@100;400;700&display=swap');
   ${reset}
-
   * {
     box-sizing: border-box;
   }

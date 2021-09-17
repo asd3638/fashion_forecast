@@ -141,11 +141,11 @@ function InputBox({ kind, handleUpload }) {
           <h1>사진을 어떻게 추가하시겠어요?</h1>
           <div>
             <Button buttonStyle onClick={onImageInputBtnClick}>
-              <i class="far fa-image"></i>
+              <i className="far fa-image"></i>
               <span>앨범</span>
             </Button>
             <Button buttonStyle onClick={openCameraModal}>
-              <i class="fas fa-camera"></i>
+              <i className="fas fa-camera"></i>
               <span>카메라</span>
             </Button>
           </div>
@@ -167,13 +167,13 @@ function InputBox({ kind, handleUpload }) {
 
         <ImageShow size={15} onClick={openModal}>
           {preview ? (
-            <img class="bg-img" src={preview.previewURL} alt="preview" />
+            <img className="bg-img" src={preview.previewURL} alt="preview" />
           ) : null}
           <UploadBtn>
-            <i class="fas fa-plus"></i>
+            <i className="fas fa-plus"></i>
           </UploadBtn>
         </ImageShow>
-        <span class="input-title">{kind}</span>
+        <span className="input-title">{kind}</span>
       </Wrapper>
     </>
   );
