@@ -76,21 +76,19 @@ function UploadSection() {
     };
     function success(pos) {
       const crd = pos.coords;
-      const url = `http://api.openweathermap.org/data/2.5/weather?lat=${crd.latitude}&lon=${crd.longitude}&appid=${WEATHER_API_KEY}`;
+      const url = `http://api.openweathermap.org/data/2.5/weather?lat=${crd.latitude}&lon=${crd.longitude}&units=metric&appid=${WEATHER_API_KEY}`;
       try {
         axios.get(url).then((response) => {
-          console.log("response");
-          console.log(response);
+          // console.log("response");
+          // console.log(response);
           setWeather({
-            temp: Math.floor(response.data.main.temp - 273.15),
+            temp: Math.floor(response.data.main.temp),
             description: response.data.weather[0].description,
-            min: Math.floor(response.data.main.temp_min - 273.15),
-            max: Math.floor(response.data.main.temp_max - 273.15),
+            min: Math.floor(response.data.main.temp_min),
+            max: Math.floor(response.data.main.temp_max),
             location: response.data.name,
           });
         });
-        console.log("weather");
-        console.log(weather);
       } catch (e) {}
     }
     function error(err) {

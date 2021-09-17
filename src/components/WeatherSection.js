@@ -1,5 +1,7 @@
 import styled from "styled-components/macro";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import useDeepCompareEffect from "use-deep-compare-effect";
+
 import { WEATHER_API_KEY } from "../Api/api";
 import axios from "axios";
 
@@ -51,10 +53,15 @@ const Weather = styled.div`
   }
 `;
 
-function WeatherSection() {
-  const [weather, setWeather] = useState({});
+function WeatherSection({ onLoad }) {
+  const [temp, setTemp] = useState(0);
+  const [moreInfo, setMoreInfo] = useState({});
+  const [location, setLocation] = useState("");
 
-  useEffect(() => fetchWeather(), []);
+  useDeepCompareEffect(() => {
+    onLoad(moreInfo);
+    fetchWeather();
+  }, [moreInfo]);
 
   const fetchWeather = async () => {
     const options = {
@@ -64,26 +71,20 @@ function WeatherSection() {
     };
     function success(pos) {
       const crd = pos.coords;
-      // console.log(pos);
-      // console.log("Your current position is:");
-      // console.log("Latitude : " + crd.latitude);
-      // console.log("Longitude: " + crd.longitude);
-      // console.log("More or less " + crd.accuracy + " meters.");
-      const url = `http://api.openweathermap.org/data/2.5/weather?lat=${crd.latitude}&lon=${crd.longitude}&appid=${WEATHER_API_KEY}`;
+      const url = `http://api.openweathermap.org/data/2.5/weather?lat=${crd.latitude}&lon=${crd.longitude}&units=metric&appid=${WEATHER_API_KEY}`;
       try {
         axios.get(url).then((response) => {
           console.log("response");
           console.log(response);
-          setWeather({
-            temp: Math.floor(response.data.main.temp - 273.15),
+          setTemp(Math.floor(response.data.main.temp));
+          setMoreInfo({
+            main: response.data.weather[0].main,
             description: response.data.weather[0].description,
-            min: Math.floor(response.data.main.temp_min - 273.15),
-            max: Math.floor(response.data.main.temp_max - 273.15),
-            location: response.data.name,
+            temp_min: Math.floor(response.data.main.temp_min),
+            temp_max: Math.floor(response.data.main.temp_max),
           });
+          setLocation(response.data.name);
         });
-        console.log("weather");
-        console.log(weather);
       } catch (e) {}
     }
     function error(err) {
@@ -97,14 +98,14 @@ function WeatherSection() {
       <Wrapper>
         <Location>
           <i className="fas fa-map-marker-alt"></i>
-          <span>{weather.location}</span>
+          <span>{location}</span>
         </Location>
         <Weather>
-          <h1 className="temperature">{weather.temp}&deg;</h1>
+          <h1 className="temperature">{temp}&deg;</h1>
           <div className="more-info">
-            <span>{weather.description}</span>
+            <span>{moreInfo.description}</span>
             <span>
-              {weather.max}&deg; / {weather.min}&deg;
+              {moreInfo.temp_max}&deg; / {moreInfo.temp_min}&deg;
             </span>
           </div>
         </Weather>
