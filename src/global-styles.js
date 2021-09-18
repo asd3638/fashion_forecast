@@ -20,8 +20,10 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 1.6rem;
-    height: 100vh;
   }
+  // div#root {
+  //   height: 100vh;
+  // }
   a {
     color: inherit;
     text-decoration: none;

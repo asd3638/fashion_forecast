@@ -60,7 +60,7 @@ function UploadSection() {
   const [weather, setWeather] = useState({});
   const [judge, setJudge] = useState("");
   const [recommend, setRecommend] = useState("");
-  const [loading, setLoading] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => fetchWeather(), []);
 
@@ -390,7 +390,7 @@ function UploadSection() {
       },
     };
     e.preventDefault();
-    setLoading(true)
+    await setLoading(true)
     api
       .post("/upload/post/1", formData, config)
       .then((res) => {
@@ -398,10 +398,11 @@ function UploadSection() {
         if (res.status === 200) {
           setClothesResult(res.data);
           checkClothes(res.data);
+          setLoading(false)
         }
       })
       .catch();
-    setLoading(false)
+    console.log(loading)
   };
 
   let result_top;
@@ -409,6 +410,7 @@ function UploadSection() {
   let result_outer;
   let result_op;
   let loader;
+  let result;
 
   if (clothesResult.length !== 0) {
     if (clothesResult.top) {
@@ -437,14 +439,24 @@ function UploadSection() {
     }
   }
   if (loading) {
-    return <Loader type="spin" color="blue" message="hum" />
+    loader = <Loader type="bubbles" color="white"/>
+  }
+  if (judge !== "") {
+    result = (<p className="recommendations">
+              지금 옷차림은 날씨에
+              <span>{`\n${judge}`}</span>합니다.
+              <br />
+              {recommend}를 입는 건 어때요?
+              <br />
+              좋은 하루 보내세요!
+            </p>)
   }
 
   return (
     <>
       <Wrapper>
-        {loader}
         <h1 className="quesetion">무엇을 입을 예정인가요?</h1>
+        {loader}
         <div className="input-box-group">
           <div className="input-box-row">
             <InputBox kind="top" handleUpload={handleUpload} />
@@ -468,14 +480,7 @@ function UploadSection() {
             {result_outer}
             {result_op}
           </div>
-          <p className="recommendations">
-            지금 옷차림은 날씨에
-            <span>{`\n${judge}`}</span>합니다.
-            <br />
-            {recommend}를 입는 건 어때요?
-            <br />
-            좋은 하루 보내세요!
-          </p>
+          {result}
         </div>
       </ResultContainer>
     </>
