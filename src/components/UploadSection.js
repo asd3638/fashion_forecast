@@ -37,25 +37,19 @@ const SeeResultBtn = styled(StyledBase)`
   height: 4.5rem;
 `;
 const ResultContainer = styled.section`
-  white-space: pre;
-  & .outfit-prediction {
-    line-height: 110%;
-    margin-bottom: 3rem;
-  }
   & .result {
-    & > p {
+    text-align: center;
+    & .predictions {
+      margin-bottom: 3rem;
+    }
+    & p {
       line-height: 200%;
     }
-    & > p > span {
+    & > .recommendations > span { //강조
       margin-top: 1rem;
       font-size: 3rem;
       font-weight: 700;
     }
-  }
-  @media screen and (min-width: 612px) {
-    display: flex;
-    flex-direction: column;
-    padding: 0 12rem;
   }
 `;
 
@@ -413,23 +407,27 @@ function UploadSection() {
 
   if (clothesResult.length !== 0) {
     if (clothesResult.top) {
+      const str = clothesResult.top.slice().reverse().join(" ");
       result_top = (
-        <p className="outfit-prediction">{`상의 ${clothesResult.top}을(를) 입으셨군요?`}</p>
+        <p className="outfit-prediction">{`상의는 ${str}을(를) 입으셨군요?`}</p>
       );
     }
     if (clothesResult.bottom) {
+      const str = clothesResult.bottom.slice().reverse().join(" ");
       result_bottom = (
-        <p className="outfit-prediction">{`하의 ${clothesResult.bottom}을(를) 입으셨군요?`}</p>
+        <p className="outfit-prediction">{`하의는 ${str}을(를) 입으셨군요?`}</p>
       );
     }
     if (clothesResult.outer) {
+      const str = clothesResult.outer.slice().reverse().join(" ");
       result_outer = (
-        <p className="outfit-prediction">{`아우터 ${clothesResult.outer}을(를) 입으셨군요?`}</p>
+        <p className="outfit-prediction">{`아우터는 ${str}을(를) 입으셨군요?`}</p>
       );
     }
     if (clothesResult.op) {
+      const str = clothesResult.op.slice().reverse().join(" ");
       result_op = (
-        <p className="outfit-prediction">{`원피스 ${clothesResult.op}을(를) 입으셨군요?`}</p>
+        <p className="outfit-prediction">{`원피스는 ${str}을(를) 입으셨군요?`}</p>
       );
     }
   }
@@ -456,15 +454,17 @@ function UploadSection() {
 
       <ResultContainer>
         <div className="result">
-          {result_top}
-          {result_bottom}
-          {result_outer}
-          {result_op}
-          <p>
+          <div className="predictions">
+            {result_top}
+            {result_bottom}
+            {result_outer}
+            {result_op}
+          </div>
+          <p className="recommendations">
             지금 옷차림은 날씨에
-            <span>{judge}</span>합니다.
+            <span>{`\n${judge}`}</span>합니다.
             <br />
-            {recommend}
+            {recommend}를 입는 건 어때요?
             <br />
             좋은 하루 보내세요!
           </p>

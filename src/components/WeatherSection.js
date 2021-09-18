@@ -23,8 +23,9 @@ const Location = styled.div`
 const Weather = styled.div`
   display: flex;
   justify-content: space-between;
+  // 모바일버전
   & > .temperature {
-    font-size: 9rem;
+    font-size: 7rem;
     font-weight: 700;
   }
   & > .more-info {
@@ -36,11 +37,12 @@ const Weather = styled.div`
       margin-bottom: 0.6rem;
     }
   }
+  // pc버전
   @media screen and (min-width: 612px) {
     flex-direction: column;
     align-items: center;
     & > .temperature {
-      font-size: 12rem;
+      font-size: 7rem;
       margin-left: 5rem;
     }
     & > .more-info {
