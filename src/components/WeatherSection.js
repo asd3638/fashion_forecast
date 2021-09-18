@@ -6,14 +6,17 @@ import { WEATHER_API_KEY } from "../Api/api";
 import axios from "axios";
 
 const Wrapper = styled.section`
+  margin-top: 2rem;
   margin-bottom: 5.5rem;
 `;
 const Location = styled.div`
   & > i {
-    margin-right: 1rem;
+    margin-right: 0.8rem;
   }
-  & > span {
+  & > .location {
+    display: inline-block;
     font-size: 1.4rem;
+    margin-bottom: 1rem;
   }
   @media screen and (min-width: 612px) {
     display: flex;
@@ -43,7 +46,7 @@ const Weather = styled.div`
     align-items: center;
     & > .temperature {
       font-size: 7rem;
-      margin-left: 5rem;
+      margin-left: 3rem;
     }
     & > .more-info {
       justify-content: center;
@@ -100,7 +103,7 @@ function WeatherSection({ onLoad }) {
       <Wrapper>
         <Location>
           <i className="fas fa-map-marker-alt"></i>
-          <span>{location}</span>
+          <span className="location">{location}</span>
         </Location>
         <Weather>
           <h1 className="temperature">{temp}&deg;</h1>

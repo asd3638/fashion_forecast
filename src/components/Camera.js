@@ -149,7 +149,11 @@ export function Camera({ onSelect, onClear }) {
   }
 
   function handleSelect() {
-    canvasRef.current.toBlob((blob) => onSelect(blob), "image/jpeg", 1);
+    canvasRef.current.toBlob(
+      (blob) => onSelect(new File([blob], "captured_img")),
+      "image/jpeg",
+      1
+    );
   }
 
   if (!mediaStream) {
