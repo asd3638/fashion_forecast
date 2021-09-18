@@ -1,7 +1,6 @@
 import styled from "styled-components/macro";
 import { useState } from "react";
 import useDeepCompareEffect from "use-deep-compare-effect";
-
 import { WEATHER_API_KEY } from "../Api/api";
 import axios from "axios";
 
