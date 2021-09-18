@@ -37,7 +37,11 @@ function Home(props) {
 
   return (
     <>
-      <Wrapper style={{ backgroundImage: `url(${bgImage})` }}>
+      <Wrapper
+        style={{
+          backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(${bgImage})`,
+        }}
+      >
         <HeaderSection isLoggedIn={idFromUrl} />
         <WeatherSection
           onLoad={(info) => info.main && info.description && showBgImage(info)}
