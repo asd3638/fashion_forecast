@@ -5,6 +5,7 @@ import UploadSection from "../components/UploadSection";
 import { BG_IMAGES, RELEVANT } from "../assets/bg-images";
 
 const Wrapper = styled.div`
+  height: 100%;
   padding: var(--horizontal-space);
   background-size: cover;
   background-position: center;
