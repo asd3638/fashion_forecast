@@ -53,7 +53,7 @@ const UploadBtn = styled.div`
     color: white;
   }
 `;
-const customStyles = {
+const modalStyles = {
   overlay: { backgroundColor: "rgba(0, 0, 0, 0.7)" },
   content: {
     top: "50%",
@@ -68,6 +68,14 @@ const customStyles = {
     flexDirection: "column",
     justifyContent: "space-around",
     alignItems: "center",
+    border: "2.5px solid black",
+    borderRadius: "1rem",
+  },
+};
+const cameraModalStyles = {
+  overlay: { backgroundColor: "rgba(0, 0, 0, 0.7)" },
+  content: {
+    padding: "0",
     border: "2.5px solid black",
     borderRadius: "1rem",
   },
@@ -98,6 +106,7 @@ function InputBox({ kind, handleUpload }) {
     };
     if (img) reader.readAsDataURL(img);
   }
+
   function onImageInput(e) {
     const img = e.target.files[0];
     showPreview(img);
@@ -135,7 +144,7 @@ function InputBox({ kind, handleUpload }) {
           isOpen={modalIsOpen}
           // onAfterOpen={afterOpenModal}
           onRequestClose={closeModal}
-          style={customStyles}
+          style={modalStyles}
           contentLabel="Example Modal"
         >
           <h1>사진을 어떻게 추가하시겠어요?</h1>
@@ -154,6 +163,7 @@ function InputBox({ kind, handleUpload }) {
         <CameraModal
           isOpen={cameraModalIsOpen}
           onRequestClose={closeCameraModal}
+          style={cameraModalStyles}
         >
           <Camera
             onSelect={(file) => {
