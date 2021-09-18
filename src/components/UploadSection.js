@@ -4,6 +4,7 @@ import InputBox from "../components/InputBox";
 import React, { useState, useEffect } from "react";
 import api, { WEATHER_API_KEY } from "../Api/api";
 import axios from "axios";
+import Loader from "./Loader"
 
 const Wrapper = styled.section`
   display: flex;
@@ -59,6 +60,7 @@ function UploadSection() {
   const [weather, setWeather] = useState({});
   const [judge, setJudge] = useState("");
   const [recommend, setRecommend] = useState("");
+  const [loading, setLoading] = useState(null);
 
   useEffect(() => fetchWeather(), []);
 
@@ -388,6 +390,7 @@ function UploadSection() {
       },
     };
     e.preventDefault();
+    setLoading(true)
     api
       .post("/upload/post/1", formData, config)
       .then((res) => {
@@ -398,12 +401,14 @@ function UploadSection() {
         }
       })
       .catch();
+    setLoading(false)
   };
 
   let result_top;
   let result_bottom;
   let result_outer;
   let result_op;
+  let loader;
 
   if (clothesResult.length !== 0) {
     if (clothesResult.top) {
@@ -431,11 +436,14 @@ function UploadSection() {
       );
     }
   }
-  // ////////////////////////////////////////////////////////////
+  if (loading) {
+    return <Loader type="spin" color="blue" message="hum" />
+  }
 
   return (
     <>
       <Wrapper>
+        {loader}
         <h1 className="quesetion">무엇을 입을 예정인가요?</h1>
         <div className="input-box-group">
           <div className="input-box-row">
