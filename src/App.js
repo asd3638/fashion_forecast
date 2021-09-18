@@ -6,7 +6,6 @@ import Login from "./routes/Login";
 import Signin from "./routes/Signin";
 import Mypage from "./routes/Mypage";
 
-
 function App() {
   return (
     <>
