@@ -79,8 +79,6 @@ function WeatherSection({ onLoad }) {
       const url = `http://api.openweathermap.org/data/2.5/weather?lat=${crd.latitude}&lon=${crd.longitude}&units=metric&appid=${WEATHER_API_KEY}`;
       try {
         axios.get(url).then((response) => {
-          console.log("response");
-          console.log(response);
           setTemp(Math.floor(response.data.main.temp));
           setMoreInfo({
             main: response.data.weather[0].main,

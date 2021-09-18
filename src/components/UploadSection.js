@@ -37,10 +37,18 @@ const SeeResultBtn = styled(StyledBase)`
   width: 24rem;
   height: 4.5rem;
 `;
+// const UndoBtn = styled(StyledBase)`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   width: 10rem;
+//   height: 4.5rem;
+// `;
 const ResultContainer = styled.section`
   & .result {
     text-align: center;
     & .predictions {
+      height: 100px;
       margin-bottom: 3rem;
     }
     & p {
@@ -54,46 +62,59 @@ const ResultContainer = styled.section`
   }
 `;
 
-function UploadSection() {
+function UploadSection(props) {
   const formData = new FormData();
   const [clothesResult, setClothesResult] = useState([]);
   const [weather, setWeather] = useState({});
   const [judge, setJudge] = useState("");
   const [recommend, setRecommend] = useState("");
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState({});
 
-  useEffect(() => fetchWeather(), []);
 
-  const fetchWeather = async () => {
-    var options = {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0,
-    };
-    function success(pos) {
-      const crd = pos.coords;
-      const url = `http://api.openweathermap.org/data/2.5/weather?lat=${crd.latitude}&lon=${crd.longitude}&units=metric&appid=${WEATHER_API_KEY}`;
-      try {
-        axios.get(url).then((response) => {
-          // console.log("response");
-          // console.log(response);
-          setWeather({
-            temp: Math.floor(response.data.main.temp),
-            description: response.data.weather[0].description,
-            min: Math.floor(response.data.main.temp_min),
-            max: Math.floor(response.data.main.temp_max),
-            location: response.data.name,
+  useEffect(() => {
+    const fetchWeather = async () => {
+      var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      };
+      function success(pos) {
+        const crd = pos.coords;
+        const url = `http://api.openweathermap.org/data/2.5/weather?lat=${crd.latitude}&lon=${crd.longitude}&units=metric&appid=${WEATHER_API_KEY}`;
+        try {
+          axios.get(url).then((response) => {
+            // console.log("response");
+            // console.log(response);
+            setWeather({
+              temp: Math.floor(response.data.main.temp),
+              description: response.data.weather[0].description,
+              min: Math.floor(response.data.main.temp_min),
+              max: Math.floor(response.data.main.temp_max),
+              location: response.data.name,
+            });
           });
-        });
-      } catch (e) {}
-    }
-    function error(err) {
-      console.warn("ERROR(" + err.code + "): " + err.message);
-    }
-    navigator.geolocation.getCurrentPosition(success, error, options);
-  };
+        } catch (e) {}
+      }
+      function error(err) {
+        console.warn("ERROR(" + err.code + "): " + err.message);
+      }
+      navigator.geolocation.getCurrentPosition(success, error, options);
+    };
+    const fetchUser = async () => {
+      try {
+          const response = await api.get(
+          `/user/${props.isLoggedIn}`
+          );
+          setUser(response.data);
+          console.log(user);
+      } catch (e) {
+      }
+    };
+    fetchWeather();
+    fetchUser();
+  }, []);
 
-  // ////////////////////////////////////////////////////////////
   function top(temperature, top) {
     if (top === undefined) {
       return 1;
@@ -411,6 +432,7 @@ function UploadSection() {
   let result_op;
   let loader;
   let result;
+  let loginHello;
 
   if (clothesResult.length !== 0) {
     if (clothesResult.top) {
@@ -441,7 +463,15 @@ function UploadSection() {
   if (loading) {
     loader = <Loader type="bubbles" color="white"/>
   }
-  if (judge !== "") {
+  if (judge === "적합") {
+    result = (<p className="recommendations">
+              지금 옷차림은 날씨에
+              <span>{`\n${judge}`}</span>합니다.
+              <br />
+              좋은 하루 보내세요!
+            </p>)
+  }
+  if (judge === "부적합") {
     result = (<p className="recommendations">
               지금 옷차림은 날씨에
               <span>{`\n${judge}`}</span>합니다.
@@ -451,11 +481,15 @@ function UploadSection() {
               좋은 하루 보내세요!
             </p>)
   }
+  if (props.isLoggedIn) {
+    loginHello = <h1 className="quesetion">안녕하세요! {user.nickName}님!</h1>
+  }
 
   return (
     <>
       <Wrapper>
-        <h1 className="quesetion">무엇을 입을 예정인가요?</h1>
+        {loginHello}
+        <h1 className="quesetion">오늘은 무엇을 입을 예정인가요?</h1>
         {loader}
         <div className="input-box-group">
           <div className="input-box-row">
@@ -467,9 +501,14 @@ function UploadSection() {
             <InputBox kind="op" handleUpload={handleUpload} />
           </div>
         </div>
-        <SeeResultBtn buttonStyle onClick={onSubmitHandler}>
+        <div style={{display: "flex"}}>
+          <SeeResultBtn buttonStyle onClick={onSubmitHandler}>
           결과 보기
-        </SeeResultBtn>
+          </SeeResultBtn>
+          {/* <UndoBtn buttonStyle onClick={onUndoHandler}>
+            다시 선택
+          </UndoBtn> */}
+        </div>
       </Wrapper>
 
       <ResultContainer>

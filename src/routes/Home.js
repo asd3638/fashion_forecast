@@ -3,7 +3,7 @@ import { useState } from "react";
 import WeatherSection from "../components/WeatherSection";
 import UploadSection from "../components/UploadSection";
 import { BG_IMAGES, RELEVANT } from "../assets/bg-images";
-
+import HeaderSection from "../components/Header"
 const Wrapper = styled.div`
   height: 100%;
   padding: var(--horizontal-space);
@@ -11,7 +11,12 @@ const Wrapper = styled.div`
   background-position: center;
 `;
 
-function Home() {
+function Home(props) {
+    //유저 fetch
+  const search = props.location.search;
+  const params = new URLSearchParams(search);
+  const idFromUrl = params.get('id');
+
   const [bgImage, setBgImage] = useState(null);
 
   function showBgImage(info) {
@@ -33,10 +38,11 @@ function Home() {
   return (
     <>
       <Wrapper style={{ backgroundImage: `url(${bgImage})` }}>
+        <HeaderSection isLoggedIn={idFromUrl}/>
         <WeatherSection
           onLoad={(info) => info.main && info.description && showBgImage(info)}
         />
-        <UploadSection />
+        <UploadSection isLoggedIn={idFromUrl}/>
       </Wrapper>
     </>
   );
