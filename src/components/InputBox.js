@@ -1,7 +1,7 @@
 import styled from "styled-components/macro";
 import React, { useState, useEffect, useRef } from "react";
 import Modal from "react-modal";
-import Capture from "./Capture";
+import { Camera } from "./Camera";
 import { StyledBase } from "../global-styles";
 
 const Wrapper = styled.div`
@@ -155,8 +155,7 @@ function InputBox({ kind, handleUpload }) {
           isOpen={cameraModalIsOpen}
           onRequestClose={closeCameraModal}
         >
-          <Capture
-            kind={kind}
+          <Camera
             onSelect={(file) => {
               showPreview(file);
               handleUpload(file, kind);
