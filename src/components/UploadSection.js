@@ -4,7 +4,7 @@ import InputBox from "../components/InputBox";
 import React, { useState, useEffect } from "react";
 import api, { WEATHER_API_KEY } from "../Api/api";
 import axios from "axios";
-import Loader from "./Loader"
+import Loader from "./Loader";
 
 const Wrapper = styled.section`
   display: flex;
@@ -54,7 +54,8 @@ const ResultContainer = styled.section`
     & p {
       line-height: 200%;
     }
-    & > .recommendations > span { //강조
+    & > .recommendations > span {
+      //강조
       margin-top: 1rem;
       font-size: 3rem;
       font-weight: 700;
@@ -70,7 +71,6 @@ function UploadSection(props) {
   const [recommend, setRecommend] = useState("");
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({});
-
 
   useEffect(() => {
     const fetchWeather = async () => {
@@ -103,13 +103,10 @@ function UploadSection(props) {
     };
     const fetchUser = async () => {
       try {
-          const response = await api.get(
-          `/user/${props.isLoggedIn}`
-          );
-          setUser(response.data);
-          console.log(user);
-      } catch (e) {
-      }
+        const response = await api.get(`/user/${props.isLoggedIn}`);
+        setUser(response.data);
+        console.log(user);
+      } catch (e) {}
     };
     fetchWeather();
     fetchUser();
@@ -402,7 +399,6 @@ function UploadSection(props) {
     if (kind === "op") {
       formData.append("op", img);
     }
-    // console.log(formData);
   };
   const onSubmitHandler = async (e) => {
     const config = {
@@ -411,19 +407,19 @@ function UploadSection(props) {
       },
     };
     e.preventDefault();
-    await setLoading(true)
+    await setLoading(true);
     api
-      .post("/upload/post/1", formData, config)
+      .post(`/upload/post/${props.isLoggedIn}`, formData, config)
       .then((res) => {
         // 서버 작업 성공하면
         if (res.status === 200) {
           setClothesResult(res.data);
           checkClothes(res.data);
-          setLoading(false)
+          setLoading(false);
         }
       })
       .catch();
-    console.log(loading)
+    console.log(loading);
   };
 
   let result_top;
@@ -461,28 +457,32 @@ function UploadSection(props) {
     }
   }
   if (loading) {
-    loader = <Loader type="bubbles" color="white"/>
+    loader = <Loader type="bubbles" color="white" />;
   }
   if (judge === "적합") {
-    result = (<p className="recommendations">
-              지금 옷차림은 날씨에
-              <span>{`\n${judge}`}</span>합니다.
-              <br />
-              좋은 하루 보내세요!
-            </p>)
+    result = (
+      <p className="recommendations">
+        지금 옷차림은 날씨에
+        <span>{`\n${judge}`}</span>합니다.
+        <br />
+        좋은 하루 보내세요!
+      </p>
+    );
   }
   if (judge === "부적합") {
-    result = (<p className="recommendations">
-              지금 옷차림은 날씨에
-              <span>{`\n${judge}`}</span>합니다.
-              <br />
-              {recommend}를 입는 건 어때요?
-              <br />
-              좋은 하루 보내세요!
-            </p>)
+    result = (
+      <p className="recommendations">
+        지금 옷차림은 날씨에
+        <span>{`\n${judge}`}</span>합니다.
+        <br />
+        {recommend}를 입는 건 어때요?
+        <br />
+        좋은 하루 보내세요!
+      </p>
+    );
   }
   if (props.isLoggedIn) {
-    loginHello = <h1 className="quesetion">안녕하세요! {user.nickName}님!</h1>
+    loginHello = <h1 className="quesetion">안녕하세요! {user.nickName}님!</h1>;
   }
 
   return (
@@ -501,9 +501,9 @@ function UploadSection(props) {
             <InputBox kind="op" handleUpload={handleUpload} />
           </div>
         </div>
-        <div style={{display: "flex"}}>
+        <div style={{ display: "flex" }}>
           <SeeResultBtn buttonStyle onClick={onSubmitHandler}>
-          결과 보기
+            결과 보기
           </SeeResultBtn>
           {/* <UndoBtn buttonStyle onClick={onUndoHandler}>
             다시 선택
