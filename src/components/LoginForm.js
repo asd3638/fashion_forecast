@@ -86,7 +86,7 @@ function LoginForm() {
           // id, pw 모두 일치 userId = userId1, msg = undefined
           sessionStorage.setItem("user_id", res.data.id);
           const id = res.data.id;
-          document.location.href = `/home?id=${id}`;
+          document.location.href = `/?id=${id}`;
         }
       })
       .catch();

@@ -11,10 +11,10 @@ function App() {
     <>
       <GlobalStyle />
       <BrowserRouter>
-        <Route exact path="/home" component={Home} />
-        <Route exact path="/mypage" component={Mypage} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/signin" component={Signin} />
+        <Route exact path="/" component={Home} />
+        <Route path="/mypage" component={Mypage} />
+        <Route path="/login" component={Login} />
+        <Route path="/signin" component={Signin} />
       </BrowserRouter>
     </>
   );

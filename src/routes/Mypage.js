@@ -1,6 +1,6 @@
 import styled from "styled-components/macro";
 import { useState, useEffect } from "react";
-import HeaderSection from "../components/Header";
+import Header from "../components/Header";
 import WeatherSection from "../components/WeatherSection";
 import OutputBox from "../components/OutputBox";
 import LookInfo from "../components/LookInfo";
@@ -54,7 +54,7 @@ function Mypage(props) {
           backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(${bgImage})`,
         }}
       >
-        <HeaderSection isLoggedIn={idFromUrl} />
+        <Header isLoggedIn={idFromUrl} />
         <WeatherSection
           onLoad={(info) => info.main && info.description && showBgImage(info)}
         />

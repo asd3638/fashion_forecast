@@ -5,17 +5,21 @@ import styled from "styled-components/macro";
 import Modal from "react-modal";
 import { StyledBase } from "../global-styles";
 
-const Header = styled.div`
+const Wrapper = styled.nav`
   display: flex;
-  & > .title {
-    font-size: 25px;
-    margin-right: 25px;
+  align-items: flex-end;
+  margin-bottom: 6rem;
+  & > .logo {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-right: 4rem;
   }
-  & > .nav__btn {
-    align-self: center;
+  & > .nav__list {
+    display: flex;
+    margin-bottom: 0.3rem;
   }
-  & > .nav__btn > a {
-    margin-right: 10px;
+  & .nav__btn + .nav__btn {
+    margin-left: 1rem;
   }
 `;
 const modalStyles = {
@@ -53,7 +57,7 @@ const ImageShow = styled(StyledBase)`
   }
 `;
 
-function HeaderSection(props) {
+function Header(props) {
   let loginNav;
   let loginHome;
   let logoutNav;
@@ -80,7 +84,7 @@ function HeaderSection(props) {
         .then((res) => {
           console.log(res.data);
           sessionStorage.removeItem("user_id");
-          document.location.href = `/home`;
+          document.location.href = `/`;
         })
         .catch((err) => console.log(err));
     } catch (err) {
@@ -90,19 +94,24 @@ function HeaderSection(props) {
   // 로그인 안 된 유저가 접속했을 때
   if (!props.isLoggedIn) {
     loginNav = <Link to="/login">Login</Link>;
-    loginHome = <Link to="/home">Home</Link>;
+    loginHome = <Link to="/">Home</Link>;
   }
   // 로그인 된 유저가 접속했을 때
   if (props.isLoggedIn) {
-    const home_link = "/home?id=" + props.isLoggedIn;
+    const home_link = "/?id=" + props.isLoggedIn;
     const mypage_link = "/mypage?id=" + props.isLoggedIn;
     loginHome = <Link to={home_link}>Home</Link>;
     logoutNav = <Link onClick={handleLogout}>Logout</Link>;
     loginMypage = <Link to={mypage_link}>MyPage</Link>;
   }
   return (
-    <Header>
-      <div className="title">Fashion Forecast</div>
+    <Wrapper>
+      <h1 className="logo">
+        Fashion
+        <br />
+        Forecast
+      </h1>
+
       <Modal
         isOpen={modalIsOpen}
         // onAfterOpen={afterOpenModal}
@@ -164,15 +173,18 @@ function HeaderSection(props) {
           있습니다.
         </div>
       </Modal>
-      <div className="nav__btn">
-        {loginHome}
-        {loginMypage}
-        {loginNav}
-        {logoutNav}
-        <span onClick={openModal}>About</span>
-      </div>
-    </Header>
+
+      <ul className="nav__list">
+        <li className="nav__btn">{loginHome}</li>
+        <li className="nav__btn">{loginMypage}</li>
+        <li className="nav__btn">{loginNav}</li>
+        <li className="nav__btn">{logoutNav}</li>
+        <li className="nav__btn" onClick={openModal}>
+          About
+        </li>
+      </ul>
+    </Wrapper>
   );
 }
 
-export default HeaderSection;
+export default Header;

@@ -5,7 +5,6 @@ import { WEATHER_API_KEY } from "../Api/api";
 import axios from "axios";
 
 const Wrapper = styled.section`
-  margin-top: 2rem;
   margin-bottom: 5.5rem;
 `;
 const Location = styled.div`

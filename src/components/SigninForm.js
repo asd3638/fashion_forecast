@@ -88,7 +88,7 @@ function SigninForm() {
   };
   const handleCancel = () => {
     // 다시 홈 화면으로 돌아가기
-    document.location.href = "/home";
+    document.location.href = "/";
   };
 
   return (

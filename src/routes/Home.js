@@ -3,10 +3,10 @@ import { useState } from "react";
 import WeatherSection from "../components/WeatherSection";
 import UploadSection from "../components/UploadSection";
 import { BG_IMAGES, RELEVANT } from "../assets/bg-images";
-import HeaderSection from "../components/Header";
+import Header from "../components/Header";
 const Wrapper = styled.div`
   height: 100%;
-  padding: var(--horizontal-space);
+  padding: 4rem var(--horizontal-space);
   background-size: cover;
   background-position: center;
 `;
@@ -39,7 +39,7 @@ function Home(props) {
           backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(${bgImage})`,
         }}
       >
-        <HeaderSection isLoggedIn={idFromUrl} />
+        <Header isLoggedIn={idFromUrl} />
         <WeatherSection
           onLoad={(info) => info.main && info.description && showBgImage(info)}
         />
