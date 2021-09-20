@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components/macro";
 import Modal from "react-modal";
 import { StyledBase } from "../global-styles";
+import weatherIMG from "../assets/weather.JPG";
+import inputIMG from "../assets/input.JPG";
 
 const Wrapper = styled.nav`
   display: flex;
@@ -32,7 +34,7 @@ const Wrapper = styled.nav`
     }
   }
 `;
-const modalStyles = {
+const aboutModalStyles = {
   overlay: { backgroundColor: "rgba(0, 0, 0, 0.7)" },
   content: {
     top: "50%",
@@ -41,31 +43,55 @@ const modalStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
-    width: "50%",
-    height: "auto",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-around",
-    alignItems: "center",
+
+    width: "80%",
+    height: "80%",
     border: "2.5px solid black",
     borderRadius: "1rem",
-    textAlign: "center",
   },
 };
+const ModalContentWrapper = styled.div`
+  line-height: 110%;
+  text-align: center;
+  & .title {
+    line-height: 115%;
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 2rem;
+  }
+  & .sm-title {
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  & .description {
+    margin-bottom: 2rem;
+  }
+`;
 const ImageShow = styled(StyledBase)`
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   width: ${(props) => (props.size ? `${props.size}rem` : "10rem")};
-  margin-bottom: 0.4rem;
+  margin-bottom: 1rem;
   overflow: hidden;
+
+  /* center positioning  */
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, 0%);
   & .bg-img {
-    position: absolute;
     width: inherit;
     height: inherit;
   }
 `;
+const AboutModal = (props) => {
+  const { isOpen } = props;
+  return isOpen ? <Modal {...props} /> : null;
+};
 
 function Header(props) {
   let loginNav;
@@ -122,67 +148,54 @@ function Header(props) {
         Forecast
       </h1>
 
-      <Modal
+      <AboutModal
         isOpen={modalIsOpen}
-        // onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
-        style={modalStyles}
-        contentLabel="Example Modal"
+        style={aboutModalStyles}
+        contentLabel="About Modal"
       >
-        <h1 style={{ font: "revert" }}>Fashion Forecast 는!</h1>
-        <br />
-        <div>
-          시시각각 변하는 날씨에 맞게 옷차림의 적합성을 판단해주는 서비스입니다.
-          <br />
-          <br />
-          상의, 하의, 아우터, 원피스 4가지의 카테고리별로 본인의 옷차림을
-          이미지나 웹캡을 통해 첨부하면 오늘 날씨 정보에 따라 옷차림의 적합
-          여부를 판단해줍니다.
-          <br />
-          <br />
-          <div style={{ display: "flex", marginLeft: "2rem" }}>
+        <ModalContentWrapper>
+          <h1 className="title">Fashion Forecast는!</h1>
+          <h4 className="sm-title">
+            오늘 나의 옷차림이 날씨에 적합한지 예측해주는 서비스입니다.
+          </h4>
+          <p className="description">
+            오늘의 옷차림 사진을 첨부한 뒤 '결과보기' 버튼을 누르면, 해당
+            옷차림이 날씨에 적합한지 4가지 카테고리(상의, 하의, 아우터,
+            원피스)를 기준으로 판단합니다.
+          </p>
+
+          <div>
+            <h4 className="sm-title">날씨정보</h4>
             <ImageShow size={12}>
-              <img src={require("../assets/weather.JPG").default} alt="desc" />
+              <img className="bg-img" src={weatherIMG} alt="weather" />
             </ImageShow>
-            <div style={{ marginLeft: "5rem" }}>
-              <div
-                style={{ textAlign: "left", WebkitTextEmphasisStyle: "open" }}
-              >
-                날씨정보
-              </div>
-              <br />
-              <div style={{ textAlign: "left" }}>
-                서비스를 사용하고 있는 사용자의 위치 정보를 기반으로 현재 그
-                지역의 날씨로 배경색이
-              </div>
-            </div>
-            <br />
+            <p className="description">
+              사용자의 위치 정보를 기반으로 실시간 날씨를 보여줍니다. 날씨에
+              따라 배경 이미지도 바뀝니다.
+            </p>
           </div>
-          <div style={{ display: "flex", marginLeft: "2rem" }}>
+
+          <div>
+            <h4 className="sm-title">이미지 첨부</h4>
             <ImageShow size={12}>
-              <img src={require("../assets/input.JPG").default} alt="desc" />
+              <img className="bg-img" src={inputIMG} alt="input" />
             </ImageShow>
-            <div style={{ marginLeft: "5rem" }}>
-              <div
-                style={{ textAlign: "left", WebkitTextEmphasisStyle: "open" }}
-              >
-                이미지업로드
-              </div>
-              <br />
-              <div style={{ textAlign: "left" }}>
-                서비스를 사용하고 있는 사용자의 위치 정보를 기반으로 현재 그
-                지역의 날씨를 보여줍니다.
-                <br />
-                날씨 정보에 일치하는 이미지를 배경 이미지로 띄워줍니다
-              </div>
-            </div>
-            <br />
+            <p className="description">
+              4가지 카테고리(상의, 하의, 아우터, 원피스)별로 옷차림 사진을
+              불러오거나 직접 촬영하여 첨부할 수 있습니다.
+            </p>
           </div>
-          또한 로그인을 진행하면 옷차림 판단 뿐 아니라 옷차림을 저장하고
-          마이페이지를 통해 일자별 옷차림 정보와 자주 입는 스타일을 확인할 수
-          있습니다.
-        </div>
-      </Modal>
+
+          <div>
+            <h4 className="sm-title">회원가입</h4>
+            <p className="description">
+              회원가입을 하면 나의 일자별 옷차림 및 내가 자주 입는 스타일까지
+              보여주는 마이페이지 기능을 이용할 수 있습니다.
+            </p>
+          </div>
+        </ModalContentWrapper>
+      </AboutModal>
 
       <ul className="nav__list">
         <li className="nav__btn">{loginHome}</li>

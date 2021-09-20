@@ -1,13 +1,13 @@
-import clear_sky from "./clear_sky.jpg";
-import few_clouds from "./few_clouds.jpg";
-import scattered_clouds from "./scattered_clouds.jpg";
-import broken_clouds from "./broken_clouds.jpg";
-import overcast_clouds from "./overcast_clouds.jpg";
-import shower_rain from "./shower_rain.jpg";
-import rain from "./rain.jpg";
-import thunderstorm from "./thunderstorm.jpg";
-import snow from "./snow.jpg";
-import mist from "./mist.jpg";
+import clear_sky from "./bg-images/clear_sky.jpg";
+import few_clouds from "./bg-images/few_clouds.jpg";
+import scattered_clouds from "./bg-images/scattered_clouds.jpg";
+import broken_clouds from "./bg-images/broken_clouds.jpg";
+import overcast_clouds from "./bg-images/overcast_clouds.jpg";
+import shower_rain from "./bg-images/shower_rain.jpg";
+import rain from "./bg-images/rain.jpg";
+import thunderstorm from "./bg-images/thunderstorm.jpg";
+import snow from "./bg-images/snow.jpg";
+import mist from "./bg-images/mist.jpg";
 
 export const BG_IMAGES = [
   clear_sky,
