@@ -2,16 +2,21 @@ import styled from "styled-components/macro";
 import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import WeatherSection from "../components/WeatherSection";
-import OutputBox from "../components/OutputBox";
+import OutfitImage from "../components/OutfitImage";
 import LookInfo from "../components/LookInfo";
 import api from "../Api/api";
 import { BG_IMAGES, RELEVANT } from "../assets/bg-images";
 
 const Wrapper = styled.div`
   height: 100vh;
-  padding: var(--horizontal-space);
+  padding: 4rem var(--horizontal-space);
   background-size: cover;
   background-position: contain;
+`;
+const OutfitImagesContainer = styled.div`
+  display: flex;
+  overflow: scroll;
+  overflow-y: hidden;
 `;
 
 function Mypage(props) {
@@ -55,29 +60,27 @@ function Mypage(props) {
         }}
       >
         <Header isLoggedIn={idFromUrl} />
+
         <WeatherSection
           onLoad={(info) => info.main && info.description && showBgImage(info)}
         />
-        <div
-          style={{
-            display: "flex",
-          }}
-        >
-          <LookInfo style={{ marginRight: "10px" }} idFromUrl={idFromUrl} />
-          <div style={{ display: "flex" }}>
-            {look.map((look) => {
-              return (
-                <OutputBox
-                  img={`data:image/png;base64,${btoa(
-                    String.fromCharCode(...new Uint8Array(look.image.data))
-                  )}`}
-                  date={look.title.split("_")[0]}
-                  style={look.style}
-                />
-              );
-            })}
-          </div>
-        </div>
+
+        {/* 스타일 빈도 수 보여주기 */}
+        <LookInfo idFromUrl={idFromUrl} />
+
+        {/* 그간 입어온 옷들 이미지로 띄워주기 */}
+        <OutfitImagesContainer>
+          {look.map((look) => {
+            return (
+              <OutfitImage
+                img={`data:image/png;base64,${btoa(
+                  String.fromCharCode(...new Uint8Array(look.image.data))
+                )}`}
+                date={look.title.split("_")[0]}
+              />
+            );
+          })}
+        </OutfitImagesContainer>
       </Wrapper>
     </>
   );

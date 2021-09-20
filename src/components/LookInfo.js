@@ -3,9 +3,38 @@ import React, { useState, useEffect } from "react";
 import api from "../Api/api";
 
 const Wrapper = styled.section`
-  margin-top: 2rem;
-  margin-bottom: 5.5rem;
-  margin-right: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 3rem;
+  & .intro {
+    margin-bottom: 2rem;
+  }
+  & .container {
+    display: flex;
+  }
+  & .container > .each-type-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  & .each-type-container + .each-type-container {
+    margin-left: 1rem;
+  }
+  & .container > .each-type-container > .kind {
+    font-size: 1rem;
+    font-weight: 900;
+  }
+  & .container > .each-type-container > .style {
+    font-size: 1.2rem;
+  }
+  @media screen and (min-width: 612px) {
+    flex-direction: row;
+    & .intro {
+      margin-bottom: 0;
+      margin-right: 2rem;
+    }
+  }
 `;
 
 function LookInfo({ idFromUrl }) {
@@ -34,16 +63,17 @@ function LookInfo({ idFromUrl }) {
   return (
     <>
       <Wrapper>
-        <div>{user.nickName} 님이 자주 입는 스타일</div>
-        <br />
-        {lookResult.map((look) => {
-          return (
-            <div>
-              <div>{look.kind}</div>
-              <div>{look.style}</div>
-            </div>
-          );
-        })}
+        <h1 className="intro">{user.nickName} 님이 자주 입는 스타일</h1>
+        <div className="container">
+          {lookResult.map((look) => {
+            return (
+              <div className="each-type-container">
+                <p className="kind">{look.kind}</p>
+                <p className="style">{look.style}</p>
+              </div>
+            );
+          })}
+        </div>
       </Wrapper>
     </>
   );

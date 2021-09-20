@@ -16,10 +16,20 @@ const Wrapper = styled.nav`
   }
   & > .nav__list {
     display: flex;
+    flex-direction: column;
     margin-bottom: 0.3rem;
   }
   & .nav__btn + .nav__btn {
-    margin-left: 1rem;
+    margin-top: 0.02rem;
+  }
+  @media screen and (min-width: 612px) {
+    & > .nav__list {
+      flex-direction: row;
+      margin-bottom: 0.3rem;
+    }
+    & .nav__btn + .nav__btn {
+      margin-left: 1rem;
+    }
   }
 `;
 const modalStyles = {

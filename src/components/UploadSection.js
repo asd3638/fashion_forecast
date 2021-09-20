@@ -37,13 +37,6 @@ const SeeResultBtn = styled(StyledBase)`
   width: 24rem;
   height: 4.5rem;
 `;
-// const UndoBtn = styled(StyledBase)`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   width: 10rem;
-//   height: 4.5rem;
-// `;
 const ResultContainer = styled.section`
   & .result {
     text-align: center;
@@ -501,13 +494,10 @@ function UploadSection(props) {
             <InputBox kind="op" handleUpload={handleUpload} />
           </div>
         </div>
-        <div style={{ display: "flex" }}>
+        <div>
           <SeeResultBtn buttonStyle onClick={onSubmitHandler}>
             결과 보기
           </SeeResultBtn>
-          {/* <UndoBtn buttonStyle onClick={onUndoHandler}>
-            다시 선택
-          </UndoBtn> */}
         </div>
       </Wrapper>
 

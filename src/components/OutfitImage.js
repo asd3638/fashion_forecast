@@ -6,6 +6,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 1rem;
   & + & {
     margin-left: 1rem;
   }
@@ -14,7 +15,7 @@ const Wrapper = styled.div`
     letter-spacing: 0.2rem;
   }
 `;
-const ImageShow = styled(StyledBase)`
+const ImageBox = styled(StyledBase)`
   position: relative;
   display: flex;
   justify-content: center;
@@ -30,19 +31,17 @@ const ImageShow = styled(StyledBase)`
   }
 `;
 
-function OutputBox({ img, date }) {
+function OutfitImage({ img, date }) {
   return (
     <>
       <Wrapper>
-        <ImageShow size={20}>
+        <ImageBox size={15}>
           <img className="bg-img" src={img} alt="preview" />
-        </ImageShow>
-        <span className="input-title" style={{ marginTop: "5px" }}>
-          {date}
-        </span>
+        </ImageBox>
+        <span className="input-title">{date}</span>
       </Wrapper>
     </>
   );
 }
 
-export default OutputBox;
+export default OutfitImage;
