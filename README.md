@@ -1,4 +1,9 @@
 # fashion_forecast
+
+[![Video Label](http://img.youtube.com/vi/3-U6LTDu3rI/0.jpg)](https://youtu.be/3-U6LTDu3rI)
+
+***이미지를 클릭하면 시연 영상을 볼 수 있습니다.***
+
 ### 1. 개요
 　딥러닝 모델로 사용자의 옷차림을 분석해 날씨와 적합한지 판단해주는 웹 애플리케이션
 
