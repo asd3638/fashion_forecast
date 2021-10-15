@@ -1,4 +1,5 @@
 import styled, { keyframes, css } from "styled-components";
+import { StyledBase } from "../global-styles";
 import { useState, useRef } from "react";
 import Measure from "react-measure";
 import { useUserMedia } from "../hooks/use-user-media";
@@ -9,19 +10,21 @@ const flashAnimation = keyframes`
   from {
     opacity: 0.75;
   }
-
   to {
     opacity: 0;
   }
 `;
 export const Wrapper = styled.div`
   display: flex;
-  flex-flow: column;
+  flex-direction: column;
   align-items: center;
   width: 100%;
 `;
 export const Container = styled.div`
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   width: 100%;
   max-width: ${({ maxWidth }) => maxWidth && `${maxWidth}px`};
   max-height: ${({ maxHeight }) => maxHeight && `${maxHeight}px`};
@@ -30,9 +33,9 @@ export const Container = styled.div`
 export const Canvas = styled.canvas`
   position: absolute;
   top: 0;
-  left: 0;
-  bottom: 0;
   right: 0;
+  bottom: 0;
+  left: 0;
 `;
 export const Video = styled.video`
   position: absolute;
@@ -41,16 +44,6 @@ export const Video = styled.video`
     display: none !important;
     -webkit-appearance: none;
   }
-`;
-export const Overlay = styled.div`
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  bottom: 20px;
-  left: 20px;
-  box-shadow: 0px 0px 20px 56px rgba(0, 0, 0, 0.6);
-  border: 1px solid #ffffff;
-  border-radius: 10px;
 `;
 export const Flash = styled.div`
   position: absolute;
@@ -64,18 +57,26 @@ export const Flash = styled.div`
   ${({ flash }) => {
     if (flash) {
       return css`
-        animation: ${flashAnimation} 750ms ease-out;
+        animation: ${flashAnimation} 300ms ease-out;
       `;
     }
   }}
 `;
-export const Button = styled.button`
-  width: 75%;
-  min-width: 100px;
-  max-width: 250px;
-  margin-top: 24px;
-  padding: 12px 24px;
-  background: silver;
+export const Button = styled(StyledBase)`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 5%;
+  height: 5%;
+  min-width: 50px;
+  min-height: 50px;
+  max-width: 200px;
+  max-height: 200px;
+  margin-bottom: 1rem;
+`;
+const SelectButton = styled(Button)`
+  left: 2rem;
 `;
 // /////////////////////////////////////////////
 
@@ -84,7 +85,7 @@ const CAPTURE_OPTIONS = {
   video: { facingMode: "environment" },
 };
 
-export function Camera({ onCapture, onClear }) {
+export function Camera({ onSelect, onClear }) {
   const canvasRef = useRef();
   const videoRef = useRef();
 
@@ -107,9 +108,12 @@ export function Camera({ onCapture, onClear }) {
   }
 
   function handleResize(contentRect) {
+    // console.log(contentRect);
     setContainer({
       width: contentRect.bounds.width,
       height: Math.round(contentRect.bounds.width / aspectRatio),
+      // width: document.documentElement.clientWidth,
+      // height: document.documentElement.clientHeight,
     });
   }
 
@@ -134,7 +138,6 @@ export function Camera({ onCapture, onClear }) {
       container.height
     );
 
-    canvasRef.current.toBlob((blob) => onCapture(blob), "image/jpeg", 1);
     setIsCanvasEmpty(false);
     setIsFlashing(true);
   }
@@ -143,7 +146,14 @@ export function Camera({ onCapture, onClear }) {
     const context = canvasRef.current.getContext("2d");
     context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
     setIsCanvasEmpty(true);
-    onClear();
+  }
+
+  function handleSelect() {
+    canvasRef.current.toBlob(
+      (blob) => onSelect(new File([blob], "captured_img")),
+      "image/jpeg",
+      1
+    );
   }
 
   if (!mediaStream) {
@@ -175,8 +185,6 @@ export function Camera({ onCapture, onClear }) {
               }}
             />
 
-            <Overlay hidden={!isVideoPlaying} />
-
             <Canvas
               ref={canvasRef}
               width={container.width}
@@ -187,13 +195,27 @@ export function Camera({ onCapture, onClear }) {
               flash={isFlashing}
               onAnimationEnd={() => setIsFlashing(false)}
             />
-          </Container>
 
-          {isVideoPlaying && (
-            <Button onClick={isCanvasEmpty ? handleCapture : handleClear}>
-              {isCanvasEmpty ? "Take a picture" : "Take another picture"}
-            </Button>
-          )}
+            {isVideoPlaying && (
+              <Button
+                roundStyle
+                buttonStyle
+                onClick={isCanvasEmpty ? handleCapture : handleClear}
+              >
+                {isCanvasEmpty ? (
+                  <i className="fas fa-camera"></i>
+                ) : (
+                  <i className="fas fa-undo-alt"></i>
+                )}
+              </Button>
+            )}
+
+            {!isCanvasEmpty && (
+              <SelectButton roundStyle buttonStyle onClick={handleSelect}>
+                <i className="fas fa-check"></i>
+              </SelectButton>
+            )}
+          </Container>
         </Wrapper>
       )}
     </Measure>

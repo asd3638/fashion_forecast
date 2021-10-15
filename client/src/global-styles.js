@@ -1,10 +1,9 @@
+import styled, { css } from "styled-components/macro";
 import { createGlobalStyle } from "styled-components/macro";
 import reset from "styled-reset";
 
 const GlobalStyle = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@100;400;700&display=swap');
   ${reset}
-
   * {
     box-sizing: border-box;
   }
@@ -21,12 +20,25 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 1.6rem;
-    padding: var(--horizontal-space);
   }
+  // div#root {
+  //   height: 100vh;
+  // }
   a {
     color: inherit;
     text-decoration: none;
   }
+`;
+
+// custom styles
+const simpleStyle = css`
+  background-color: white;
+  border: 2.5px solid black;
+  border-radius: ${(props) => (props.roundStyle ? "50%" : "1rem")};
+  border-width: ${(props) => (props.buttonStyle ? "2.5px 2.5px 5px" : "")};
+`;
+export const StyledBase = styled.div`
+  ${simpleStyle}
 `;
 
 export default GlobalStyle;
